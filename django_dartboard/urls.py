@@ -15,6 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.utils.translation import gettext as _
+
+
+# Admin Site Config
+admin.sites.AdminSite.site_header = _('Dartboard administraion')
+admin.sites.AdminSite.site_title = _('Dartboard administraion')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
