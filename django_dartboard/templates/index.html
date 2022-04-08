@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static l10n i18n django_bootstrap5 %}
+
+{% block content %}
+<div class="row text-center">
+    <div class="col">
+        <h2>Welcome to the dango dartboard, {{ request.user }}</h2>
+        <img src="{% static 'img/dartboard.png' %}" alt="{% trans 'Dartboard' %}" >
+    </div>
+</div>
+{% endblock %}

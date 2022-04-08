@@ -14,15 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.utils.translation import gettext as _
 
 
 # Admin Site Config
+from django_dartboard import views
+
 admin.sites.AdminSite.site_header = _('Dartboard administraion')
 admin.sites.AdminSite.site_title = _('Dartboard administraion')
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
+    path('', views.index, name='home'),
 ]
