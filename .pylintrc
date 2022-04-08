@@ -1,0 +1,18 @@
+[MASTER]
+load-plugins=pylint_django
+django-settings-module=django_dartboard.settings
+ignore-patterns=\d{4}_.*?.py
+
+[FORMAT]
+max-line-length=120
+
+[MESSAGES CONTROL]
+disable=
+    C0114, C0115, C0116, W5104, R0903, W0122, R1732, R0801
+
+[TYPECHECK]
+generated-members=REQUEST,acl_users,aq_parent,objects,_meta,id
+
+[DESIGN]
+max-parents=15
+max-nested-blocks=6
