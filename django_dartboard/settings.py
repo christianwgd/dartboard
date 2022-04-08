@@ -18,6 +18,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_APP_PATH = os.path.dirname(os.path.abspath(__file__))
 PROJECT_APP = os.path.basename(PROJECT_APP_PATH)
 
+
+# Settings for tests, override in production with localsettings!
+DEBUG = True
+SECRET_KEY = 'django-insecure-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'dartboard.db'),
+    }
+}
+
+
 # Application definition
 
 INSTALLED_APPS = [
