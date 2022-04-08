@@ -27,6 +27,9 @@ class Match(models.Model):
         verbose_name=_('Type'), max_length=3,
         choices=MATCH_TYPE_CHOICES, default='501'
     )
+    best_of = models.PositiveSmallIntegerField(
+        default=3, verbose_name=_('best of')
+    )
     timestamp = models.DateTimeField(
         auto_now_add=True, verbose_name=_('Date of match')
     )
