@@ -11,7 +11,7 @@ class MatchCreateView(LoginRequiredMixin, CreateView):
     form_class = MatchForm
 
     def get_success_url(self):
-        return reverse('match:board')
+        return reverse('match:board', kwargs={'pk': self.object.id})
 
 
 class MatchBoardView(LoginRequiredMixin, DetailView):
