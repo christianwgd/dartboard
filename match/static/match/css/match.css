@@ -4,7 +4,7 @@
 }
 
 .field-section-1 {
-    background-color: lightgray;
+    background-color: #eeeeee;
 }
 
 .field-section-1 .field:after {
@@ -18,7 +18,7 @@
 }
 
 .field-section-2 {
-    background-color: antiquewhite;
+    background-color: #dddddd;
 }
 
 .field-section-2 .field:after {
@@ -32,7 +32,7 @@
 }
 
 .field-section-3 {
-    background-color: honeydew;
+    background-color: #cccccc;
 }
 
 .field-section-3 .field:after {

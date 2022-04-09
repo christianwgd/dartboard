@@ -3,8 +3,22 @@
 
 {% block bootstrap5_extra_head %}
 {{ block.super }}
-{{ form.media.css }}
 <link rel="stylesheet" type="text/css" href="{% static "match/css/match.css" %}" />
+{% endblock %}
+
+{% block bootstrap5_extra_script %}
+{{ block.super }}
+<script>
+$(document).ready(function() {
+
+    $('.field').click(function () {
+        let val = $(this).data('value');
+        let mult = $(this).data('multiplier');
+        alert('value '+val+' multiplier '+mult);
+    });
+
+});
+</script>
 {% endblock %}
 
 {% block content %}
@@ -14,7 +28,9 @@
         {% for field in fields %}
             {% if forloop.first %}<div class="row row-col-5">{% endif %}
             <div class="col field-container">
-                <div class="field">{{ field }}</div>
+                <div class="field" data-value="{{ field }}" data-multiplier="{{ mult }}">
+                    {{ field }}
+                </div>
             </div>
             {% if forloop.counter|divisibleby:5 %}</div><div class="row row-col-5">{% endif %}
             {% if forloop.last %}</div>{% endif %}
