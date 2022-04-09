@@ -5,10 +5,11 @@ from faker import Faker
 from match.models import Match, Leg, Turn
 from player.models import League, Player
 
+
 User = auth.get_user_model()
 
 
-class MatchModelTest(TestCase):
+class MatchTest(TestCase):
 
     def setUp(self):
         self.fake = Faker('de_DE')
@@ -39,6 +40,7 @@ class MatchModelTest(TestCase):
             player=self.match.player1,
         )
 
+    # Model Tests
     def test_match_str(self):
         self.assertEqual(
             self.match.__str__(),
@@ -56,3 +58,14 @@ class MatchModelTest(TestCase):
             self.turn.__str__(),
             f'{self.turn.leg} {self.turn.player}'
         )
+
+    # Form Tests
+    def test_match_form(self):
+        pass
+
+    # View Tests
+    def test_match_create_view(self):
+        pass
+
+    def test_board_view(self):
+        pass

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static l10n i18n django_bootstrap5 %}
+
+{% block bootstrap5_extra_head %}
+{{ block.super }}
+{{ form.media.css }}
+<link rel="stylesheet" type="text/css" href="{% static "match/css/match.css" %}" />
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% for mult in multipliers %}
+    <div class="col-lg-4 col-md-12 field-section field-section-{{ mult }}">
+        {% for field in fields %}
+            {% if forloop.first %}<div class="row row-col-5">{% endif %}
+            <div class="col field-container">
+                <div class="field">{{ field }}</div>
+            </div>
+            {% if forloop.counter|divisibleby:5 %}</div><div class="row row-col-5">{% endif %}
+            {% if forloop.last %}</div>{% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
