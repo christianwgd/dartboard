@@ -36,5 +36,5 @@ class League(models.Model):
     name = models.CharField(_('Name'), max_length=50)
     players = models.ManyToManyField(
         Player, verbose_name=_('Players'),
-        blank=True, related_name='players'
+        blank=True, related_name='leagues'
     )

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static l10n i18n django_bootstrap5 %}
+
+{% block bootstrap5_extra_head %}
+{{ block.super }}
+{{ form.media.css }}
+<link rel="stylesheet" type="text/css" href="{% static "player/css/league.css" %}" />
+{% endblock %}
+
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
+{% for league in league_list %}
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                {% trans 'Leagues' %}
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for player in league.players.all %}
+                <li class="list-group-item">{{ league }}</li>
+                {% empty %}
+                <li class="list-group-item">{% trans 'Player is not in any league' %}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endfor %}
+</div>
+<div class="row">
+    <div class="col">
+        <a href="" class="btn btn-success">
+            <i class="far fa-plus"></i>
+        </a>
+    </div>
+</div>
+{% endblock %}
