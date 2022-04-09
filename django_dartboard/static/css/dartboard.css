@@ -1,3 +1,15 @@
+.status-bar {
+    background-color: lightgray;
+    height: 4rem;
+    padding: .4rem;
+}
+
+.img-avatar {
+    border: 1px solid #333;
+    border-radius: 50%;
+    background-color: white;
+}
+
 .page_title {
     text-align: center;
     margin-top: 5rem;

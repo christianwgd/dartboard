@@ -30,6 +30,14 @@
 <!-- Content -->
 <div class="container-fluid" id="id_main_content">
 
+    <div class="row status-bar">
+        <div class="col">
+            {% if request.user.is_authenticated %}
+                {% avatar request.user 50 class="img-avatar float-end" title=request.user.player %}
+            {% endif %}
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12">
         <h3 class="page_title">{% block page_title %}{% endblock %}</h3>
