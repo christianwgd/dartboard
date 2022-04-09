@@ -6,4 +6,3 @@ app_name = "match"
 urlpatterns = [
     path("board/", views.board, name="board"),
 ]
-
