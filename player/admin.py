@@ -20,7 +20,7 @@ class PlayerAdmin(admin.ModelAdmin):
 
     @staticmethod
     def image_tag(obj):
-        return avatar(obj.ref_usr, 20)
+        return avatar(obj.user, 20)
 
     image_tag.short_description = _('Image')
     image_tag.allow_tags = True
