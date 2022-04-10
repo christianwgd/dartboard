@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "board_base.html" %}
 {% load static l10n i18n django_bootstrap5 %}
 
 {% block bootstrap5_extra_head %}
@@ -14,14 +14,41 @@ $(document).ready(function() {
     $('.field').click(function () {
         let val = $(this).data('value');
         let mult = $(this).data('multiplier');
-        alert('value '+val+' multiplier '+mult);
+        let score = $('.player.active').find('.score').text();
+        score = score - (val * mult);
+        $('.player.active').find('.score').text(score);
     });
 
 });
 </script>
 {% endblock %}
 
+{% block page_title %}{% endblock %}
+
 {% block content %}
+<div class="row">
+    <div class="col-6 col-xs-12 player player1 active">
+        <div class="row">
+            <div class="col-6">
+                {{ match.player1 }}
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <span id="id_score_pl1" class="score">501</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-xs-12 player player2">
+        <div class="row">
+            <div class="col-6">
+                <span id="id_score_pl2" class="score">501</span>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                {{ match.player2 }}
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     {% for mult in multipliers %}
     <div class="col-lg-4 col-md-12 field-section field-section-{{ mult }}">
@@ -37,5 +64,33 @@ $(document).ready(function() {
         {% endfor %}
     </div>
     {% endfor %}
+</div>
+
+<div class="row">
+    <div class="col-12 buttons">
+        <div class="row">
+            <div class="col-2 d-flex justify-content-center">
+                <button id="" class="btn btn-lg btn-secondary">
+                    <i class="far fa-times"></i>
+                </button>
+            </div>
+            <div class="col-5 d-flex justify-content-end">
+                <button id="" class="btn btn-lg btn-light field" data-value="25" data-multiplier="1">
+                    <i class="far fa-bullseye"></i> 25
+                </button>
+                <button id="" class="btn btn-lg btn-light field" data-value="50" data-multiplier="1">
+                    <i class="far fa-bullseye-pointer"></i> 50
+                </button>
+            </div>
+            <div class="col-5 d-flex justify-content-end">
+                <button id="" class="btn btn-lg btn-danger">
+                    <i class="far fa-backspace"></i>
+                </button>
+                <button id="" class="btn btn-lg btn-success">
+                    <i class="far fa-angle-double-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

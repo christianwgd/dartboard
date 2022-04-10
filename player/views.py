@@ -1,9 +1,33 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import auth
 from django.urls import reverse
-from django.views.generic import UpdateView, ListView
+from django.views.generic import UpdateView, ListView, CreateView
 
-from player.forms import PlayerForm
+from player.forms import PlayerForm, UserForm
 from player.models import Player, League
+
+
+User = auth.get_user_model()
+
+
+class UserCreateView(LoginRequiredMixin, CreateView):
+    model = User
+    form_class = UserForm
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def form_valid(self, form):
+        user = form.save(commit=True)
+        player = Player.objects.create(
+            user=user
+        )
+        if 'nickname' in form.changed_data:
+            player.nickname = form.cleaned_data['nickname']
+            player.save()
+        league = League.objects.get(pk=self.kwargs['league_id'])
+        league.players.add(player)
+        return super().form_valid(form)
 
 
 class PlayerUpdateView(LoginRequiredMixin, UpdateView):

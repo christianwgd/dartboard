@@ -21,7 +21,8 @@
                 {% for player in league.players.all %}
                 <li class="list-group-item">
                     {{ player }}
-                    <a href="" class="btn btn-sm btn-danger float-end" title="{% trans 'Remove player' %}">
+                    <a href="" class="btn btn-sm btn-danger float-end"
+                       title="{% trans 'Remove player' %}">
                         <i class="far fa-minus"></i>
                     </a>
                 </li>
@@ -31,7 +32,8 @@
                 </li>
                 {% endfor %}
                 <li class="list-group-item" style="padding: 5px;">
-                    <a href="" class="btn btn-sm btn-success" title="{% trans 'Add player' %}">
+                    <a href="{% url 'player:create' league.id %}" class="btn btn-sm btn-success"
+                       title="{% trans 'Add player' %}">
                         <i class="far fa-plus"></i>
                     </a>
                 </li>

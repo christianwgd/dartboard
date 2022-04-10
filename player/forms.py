@@ -1,7 +1,11 @@
 from django import forms
+from django.contrib import auth
 from django.utils.translation import gettext as _
 
 from player.models import Player
+
+
+User = auth.get_user_model()
 
 
 class PlayerForm(forms.models.ModelForm):
@@ -23,3 +27,14 @@ class PlayerForm(forms.models.ModelForm):
     class Meta:
         model = Player
         fields = ['first_name', 'last_name', 'nickname', 'email']
+
+
+class UserForm(forms.models.ModelForm):
+
+    nickname = forms.CharField(
+        label=_('Nickname'), max_length=50, required=False
+    )
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'nickname', 'email']

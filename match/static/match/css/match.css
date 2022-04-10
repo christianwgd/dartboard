@@ -1,6 +1,25 @@
+.player1, .player2 {
+    background-color: #666666;
+    color: white;
+}
+
+.player.active {
+    background-color: firebrick;
+}
+
+.score {
+    font-size: 6rem;
+}
+
+#id_score_pl1 {
+    padding-right: 1rem;
+}
+
+#id_score_pl2 {
+    padding-left: 1rem
+}
+
 .field-section {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
 }
 
 .field-section-1 {
@@ -57,4 +76,14 @@
     margin-top: .5rem;
     margin-bottom: .5rem;
     width: 2.5rem;
+}
+
+.buttons {
+    padding: 1rem;
+    background-color: lightgray;
+}
+
+.btn-lg {
+    margin: 0 1rem;
+    width: 8rem;
 }

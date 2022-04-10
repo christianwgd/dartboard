@@ -20,7 +20,7 @@ class Player(models.Model):
         verbose_name=_("User"), related_name='player'
     )
     nickname = models.CharField(
-        _('nickname'), max_length=50, null=True, blank=True
+        _('Nickname'), max_length=50, null=True, blank=True
     )
 
 
