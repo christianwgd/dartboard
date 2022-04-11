@@ -8,27 +8,27 @@
 
 {% block bootstrap5_extra_script %}
 {{ block.super }}
+<script>let csrftoken = '{{ csrf_token }}';</script>
 <script src="{% static 'match/js/board.js' %}"></script>
 {% endblock %}
 
 {% block page_title %}{% endblock %}
 
 {% block content %}
+<span class="hidden" id="match_id">{{ match.id }}</span>
 <div class="row">
     <div class="col-6 col-xs-12 player player1 active">
         <div class="row">
             <div class="col-6">
                 <div class="row">
-                    <div class="col-12 d-flex justify-content-start">
+                    <div id="{{ match.player1.id }}" class="col-12 d-flex justify-content-start player-name">
                         {{ match.player1 }}
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12 justify-content-start">
-                        <span id="dart-1"></span>
-                        <span id="dart-2"></span>
-                        <span id="dart-3"></span>
-                    </div>
+                <div class="row throws throws-left">
+                    <div class="col-1 throw" id="dart-1"></div>
+                    <div class="col-1 throw" id="dart-2"></div>
+                    <div class="col-1 throw" id="dart-3"></div>
                 </div>
             </div>
             <div class="col-6 d-flex justify-content-end">
@@ -43,16 +43,14 @@
             </div>
             <div class="col-6">
                 <div class="row">
-                    <div class="col-12 d-flex justify-content-end">
+                    <div id="{{ match.player2.id }}" class="col-12 d-flex justify-content-end player-name">
                         {{ match.player2 }}
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12 justify-content-end">
-                        <span id="dart-1"></span>
-                        <span id="dart-2"></span>
-                        <span id="dart-3"></span>
-                    </div>
+                <div class="row d-flex justify-content-end throws throws-right">
+                    <div class="col-1 throw" id="dart-1"></div>
+                    <div class="col-1 throw" id="dart-2"></div>
+                    <div class="col-1 throw" id="dart-3"></div>
                 </div>
             </div>
         </div>

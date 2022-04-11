@@ -55,6 +55,12 @@ class Match(models.Model):
         related_name='match_wins', verbose_name=_('Winner'),
         null=True, blank=True
     )
+    score_player1 = models.PositiveSmallIntegerField(
+        default=0, verbose_name=_('Score player 1'),
+    )
+    score_player2 = models.PositiveSmallIntegerField(
+        default=0, verbose_name=_('Score player 2'),
+    )
 
 
 class Leg(models.Model):
@@ -64,6 +70,7 @@ class Leg(models.Model):
     class Meta:
         verbose_name = _("Leg")
         verbose_name_plural = _("Legs")
+        ordering = ['ord']
 
     def __str__(self):
         return f'{self.match} Leg {self.ord}'

@@ -7,6 +7,11 @@
     background-color: firebrick;
 }
 
+.player-name {
+    padding-top: 1rem;
+    font-size: 1.5rem;
+}
+
 .score {
     font-size: 6rem;
 }
@@ -82,6 +87,24 @@
     background: darkgray;
 }
 
+.throws .throw {
+    width: 2rem;
+    font-size: 1.2rem;
+}
+
+.throws-left .throw {
+    padding-right: .5rem;
+}
+
+.throws-right .throw {
+    text-align: right;
+    padding-left: .5rem;
+}
+
+.throws-right {
+    padding-right: .5rem;
+}
+
 .buttons {
     padding: 1rem;
     background-color: lightgray;
@@ -94,4 +117,8 @@
 
 .delete {
     color: red;
+}
+
+.hidden {
+    display: none;
 }
