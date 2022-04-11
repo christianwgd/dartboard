@@ -25,6 +25,12 @@ class MatchCreateView(LoginRequiredMixin, CreateView):
         )
         return ctx
 
+    def form_valid(self, form):
+        match = form.save(commit=True)
+        Leg.objects.create(match=match)
+        return super().form_valid(form)
+
+
 
 class MatchBoardView(LoginRequiredMixin, DetailView):
     model = Match
@@ -49,7 +55,7 @@ def save_turn(request, match_id):
     throw2 = request.POST.get('throw2', 0)
     throw3 = request.POST.get('throw3', 0)
     match = Match.objects.get(pk=match_id)
-    leg = Leg.objects.create(match=match, ord=match.legs.count()+1)
+    leg = match.legs.last()
     Turn.objects.create(
         leg=leg,
         player=Player.objects.get(pk=player_id),
