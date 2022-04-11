@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib import auth
+from django.utils import formats
 from faker import Faker
 
 from match.models import Match, Leg, Turn
@@ -42,9 +43,10 @@ class MatchTest(TestCase):
 
     # Model Tests
     def test_match_str(self):
+        tmstmp = formats.date_format(self.match.timestamp, 'SHORT_DATETIME_FORMAT')
         self.assertEqual(
             self.match.__str__(),
-            f'{self.match.timestamp} {self.match.typus}: {self.match.player1} - {self.match.player2}'
+            f'{self.match.typus}: {self.match.player1} - {self.match.player2} ({tmstmp})'
         )
 
     def test_leg_str(self):

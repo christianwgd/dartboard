@@ -8,14 +8,34 @@
 {% endblock %}
 
 {% block content %}
-<form role="form" class="form-horizontal" method="post" novalidate>
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <button class="btn btn-primary">
-        <i class="far fa-check"></i>
-    </button>
-    <a href="{% url 'home' %}" class="btn btn-secondary">
-        <i class="far fa-times"></i>
-    </a>
-</form>
+<div class="row">
+    <div class="col-12 col-md-6">
+        <form role="form" class="form-horizontal" method="post" novalidate>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-primary">
+                <i class="far fa-check"></i>
+            </button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">
+                <i class="far fa-times"></i>
+            </a>
+        </form>
+    </div>
+    <div class="col-12 col-md-6">
+        <h6>{% trans 'Unfinished matches' %}</h6>
+        <ul class="list-group list-group-flush">
+            {% for match in unfinished %}
+            <li class="list-group-item">
+                <a href="{% url 'match:board' match.id %}">{{ match }}</a>
+                <a href="{% url 'match:delete' match.id %}" class="delete float-end" title="{% trans 'Remove match' %}">
+                    <i class="far fa-trash"></i>
+                </a>
+            </li>
+            {% empty %}
+            <li class="list-group-item">{% trans 'No unfinished matches' %}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
 {% endblock %}
