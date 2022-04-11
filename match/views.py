@@ -50,7 +50,7 @@ def save_turn(request, match_id):
     throw3 = request.POST.get('throw3', 0)
     match = Match.objects.get(pk=match_id)
     leg = Leg.objects.create(match=match, ord=match.legs.count()+1)
-    turn = Turn.objects.create(
+    Turn.objects.create(
         leg=leg,
         player=Player.objects.get(pk=player_id),
         throw1=throw1,
