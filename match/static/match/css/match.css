@@ -78,6 +78,10 @@
     width: 2.5rem;
 }
 
+.field:active {
+    background: darkgray;
+}
+
 .buttons {
     padding: 1rem;
     background-color: lightgray;
