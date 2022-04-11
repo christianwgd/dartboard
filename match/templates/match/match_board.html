@@ -8,19 +8,7 @@
 
 {% block bootstrap5_extra_script %}
 {{ block.super }}
-<script>
-$(document).ready(function() {
-
-    $('.field').click(function () {
-        let val = $(this).data('value');
-        let mult = $(this).data('multiplier');
-        let score = $('.player.active').find('.score').text();
-        score = score - (val * mult);
-        $('.player.active').find('.score').text(score);
-    });
-
-});
-</script>
+<script src="{% static 'match/js/board.js' %}"></script>
 {% endblock %}
 
 {% block page_title %}{% endblock %}
@@ -30,7 +18,18 @@ $(document).ready(function() {
     <div class="col-6 col-xs-12 player player1 active">
         <div class="row">
             <div class="col-6">
-                {{ match.player1 }}
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-start">
+                        {{ match.player1 }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 justify-content-start">
+                        <span id="dart-1"></span>
+                        <span id="dart-2"></span>
+                        <span id="dart-3"></span>
+                    </div>
+                </div>
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <span id="id_score_pl1" class="score">501</span>
@@ -42,8 +41,19 @@ $(document).ready(function() {
             <div class="col-6">
                 <span id="id_score_pl2" class="score">501</span>
             </div>
-            <div class="col-6 d-flex justify-content-end">
-                {{ match.player2 }}
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        {{ match.player2 }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 justify-content-end">
+                        <span id="dart-1"></span>
+                        <span id="dart-2"></span>
+                        <span id="dart-3"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -84,7 +94,7 @@ $(document).ready(function() {
                 <button id="" class="btn btn-lg btn-danger">
                     <i class="far fa-backspace"></i>
                 </button>
-                <button id="" class="btn btn-lg btn-success">
+                <button id="next-player" class="btn btn-lg btn-success">
                     <i class="far fa-angle-double-right"></i>
                 </button>
             </div>
