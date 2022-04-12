@@ -28,8 +28,10 @@ class MatchCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         match = form.save(commit=True)
         Leg.objects.create(match=match)
+        initial_score = int(match.typus)
+        match.score_player1 = initial_score
+        match.score_player2 = initial_score
         return super().form_valid(form)
-
 
 
 class MatchBoardView(LoginRequiredMixin, DetailView):
@@ -51,16 +53,26 @@ def delete_match(request, match_id):
 @require_http_methods(["POST"])
 def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
-    throw1 = request.POST.get('throw1', 0)
-    throw2 = request.POST.get('throw2', 0)
-    throw3 = request.POST.get('throw3', 0)
+    if not player_id:
+        return HttpResponse('error')
+    player = Player.objects.get(pk=player_id)
+    throw1 = int(request.POST.get('throw1', 0))
+    throw2 = int(request.POST.get('throw2', 0))
+    throw3 = int(request.POST.get('throw3', 0))
     match = Match.objects.get(pk=match_id)
     leg = match.legs.last()
     Turn.objects.create(
         leg=leg,
-        player=Player.objects.get(pk=player_id),
+        player=player,
         throw1=throw1,
         throw2=throw2,
         throw3=throw3,
     )
+    if player == match.player1:
+        match.score_player1 -= throw1 + throw2 + throw3
+    elif player == match.player2:
+        match.score_player1 -= throw1 + throw2 + throw3
+    else:
+        pass
+    match.save()
     return HttpResponse('success')
