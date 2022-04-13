@@ -1,3 +1,16 @@
+function resetThrows() {
+    $('.player.active').find('#dart-1').html(
+        '<i class="far fa-long-arrow-alt-right"></i>'
+    );
+    $('.player.active').find('#dart-2').html(
+        '<i class="far fa-long-arrow-alt-right"></i>'
+    );
+    $('.player.active').find('#dart-3').html(
+        '<i class="far fa-long-arrow-alt-right"></i>'
+    );
+}
+
+
 $(document).ready(function() {
     let thrown_darts = [];
 
@@ -37,14 +50,26 @@ $(document).ready(function() {
                 'throw3': thrown_darts[2],
             },
             success: function(data) {
-               if ($('.player.active').hasClass('player1')) {
-                   $('.player1').removeClass('active');
-                   $('.player2').addClass('active');
-               } else {
-                   $('.player2').removeClass('active');
-                   $('.player1').addClass('active');
-               }
-            },
+                let ret = JSON.parse(data);
+                resetThrows();
+                console.log(ret);
+                console.log(ret.success);
+                console.log(ret.old_score);
+                console.log(ret.throw_score);
+                if (ret.success) {
+                    $('.player.active').find('.old-score').html(ret.old_score);
+                    $('.player.active').find('.throw-score').html(ret.throw_score);
+                    if ($('.player.active').hasClass('player1')) {
+                        $('.player1').removeClass('active');
+                        $('.player2').addClass('active');
+                    } else {
+                        $('.player2').removeClass('active');
+                        $('.player1').addClass('active');
+                    }
+                } else {
+                    alert(ret.reason);
+                }
+             },
         });
         thrown_darts = [];
     });

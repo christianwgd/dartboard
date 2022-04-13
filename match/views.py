@@ -1,6 +1,8 @@
+import json
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
@@ -54,11 +56,12 @@ def delete_match(request, match_id):
 def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
     if not player_id:
-        return HttpResponse('error')
+        return JsonResponse(json.dumps({'success': False, 'reason': 'No player provided'}))
     player = Player.objects.get(pk=player_id)
     throw1 = int(request.POST.get('throw1', 0))
     throw2 = int(request.POST.get('throw2', 0))
     throw3 = int(request.POST.get('throw3', 0))
+    throw_score = throw1 + throw2 + throw3
     match = Match.objects.get(pk=match_id)
     leg = match.legs.last()
     Turn.objects.create(
@@ -69,10 +72,17 @@ def save_turn(request, match_id):
         throw3=throw3,
     )
     if player == match.player1:
-        match.score_player1 -= throw1 + throw2 + throw3
+        old_score = match.score_player1
+        match.score_player1 -= throw_score
     elif player == match.player2:
-        match.score_player1 -= throw1 + throw2 + throw3
+        old_score = match.score_player2
+        match.score_player2 -= throw_score
     else:
-        pass
+        return JsonResponse(json.dumps({'success': False, 'reason': 'Player is not in match'}))
     match.save()
-    return HttpResponse('success')
+    return_data = {
+        'success': True,
+        'throw_score': throw_score,
+        'old_score': old_score
+    }
+    return JsonResponse(json.dumps(return_data), safe=False)

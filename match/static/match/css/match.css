@@ -12,6 +12,10 @@
     font-size: 1.5rem;
 }
 
+.player2 .player-name {
+    text-align: right;
+}
+
 .score {
     font-size: 6rem;
 }
@@ -88,7 +92,6 @@
 }
 
 .throws .throw {
-    width: 2rem;
     font-size: 1.2rem;
 }
 
@@ -99,10 +102,6 @@
 .throws-right .throw {
     text-align: right;
     padding-left: .5rem;
-}
-
-.throws-right {
-    padding-right: .5rem;
 }
 
 .buttons {
@@ -122,4 +121,29 @@
 
 .hidden {
     display: none;
+}
+
+/*.old-score-right {*/
+/*    margin-right: 1rem;*/
+/*}*/
+
+/*.old-score-right .old-score {*/
+/*    margin-left: 1rem;*/
+/*}*/
+
+/*.old-score-left .old-score {*/
+/*    margin-right: 1rem;*/
+/*}*/
+
+.old-score {
+    color: #cccccc;
+    text-decoration: line-through;
+}
+
+.old-score-left, .old-score-right {
+    border-top: .5px solid #cccccc;
+}
+
+.throw-score {
+    color: #cccccc;
 }
