@@ -52,10 +52,6 @@ $(document).ready(function() {
             success: function(data) {
                 let ret = JSON.parse(data);
                 resetThrows();
-                console.log(ret);
-                console.log(ret.success);
-                console.log(ret.old_score);
-                console.log(ret.throw_score);
                 if (ret.success) {
                     $('.player.active').find('.old-score').html(ret.old_score);
                     $('.player.active').find('.throw-score').html(ret.throw_score);
