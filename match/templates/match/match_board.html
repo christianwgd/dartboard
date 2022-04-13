@@ -1,4 +1,4 @@
-{% extends "board_base.html" %}
+{% extends "base.html" %}
 {% load static l10n i18n django_bootstrap5 %}
 
 {% block bootstrap5_extra_head %}
@@ -14,7 +14,20 @@
 <script src="{% static 'match/js/board.js' %}"></script>
 {% endblock %}
 
-{% block page_title %}{% endblock %}
+{% block status_bar_content %}
+<div class="row">
+    <div class="col match-type">
+        {{ match.get_typus_display }}
+    </div>
+    <div class="col best-of">
+        {% trans 'Best of' %}
+        {{ match.best_of }}
+        <br/>
+        {% trans 'League' %}:
+        {{ match.league }}
+    </div>
+</div>
+{% endblock %}
 
 {% block content %}
 <span class="hidden" id="match_id">{{ match.id }}</span>

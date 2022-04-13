@@ -1,3 +1,7 @@
+.match-type {
+    font-size: 2rem;
+}
+
 .player1, .player2 {
     background-color: #666666;
     color: white;
@@ -122,18 +126,6 @@
 .hidden {
     display: none;
 }
-
-/*.old-score-right {*/
-/*    margin-right: 1rem;*/
-/*}*/
-
-/*.old-score-right .old-score {*/
-/*    margin-left: 1rem;*/
-/*}*/
-
-/*.old-score-left .old-score {*/
-/*    margin-right: 1rem;*/
-/*}*/
 
 .old-score {
     color: #cccccc;

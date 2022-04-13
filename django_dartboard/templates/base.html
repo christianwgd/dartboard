@@ -31,11 +31,16 @@
 <div class="container-fluid" id="id_main_content">
 
     <div class="row status-bar">
-        <div class="col">
+        <div class="col-1">
             <a href="{% url 'home' %}">
                 <img class="" src="{% static 'favicon/safari-pinned-tab.svg' %}"
                       alt="{% trans 'Home' %}" width="50">
             </a>
+        </div>
+        <div class="col-10">
+            {% block status_bar_content %}{% endblock %}
+        </div>
+        <div class="col-1">
             {% if request.user.is_authenticated %}
                 <a href="{% url 'player:update' %}">
                 {% avatar request.user 50 class="img-avatar float-end" title=request.user.player %}
@@ -46,7 +51,6 @@
 
     <div class="row">
         <div class="col-12">
-        <h3 class="page_title">{% block page_title %}{% endblock %}</h3>
         {% block content %}{% endblock %}
         </div>
     </div>
