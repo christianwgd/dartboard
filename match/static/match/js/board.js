@@ -31,6 +31,36 @@ $(document).ready(function() {
         }
     });
 
+    $('.undo').click(function() {
+        let thrown = thrown_darts.length;
+        let undo_score = 0;
+        switch (thrown) {
+            case 1:
+                undo_score = thrown_darts.pop();
+                $('.player.active').find('#dart-1').html(
+                '<i class="far fa-long-arrow-alt-right"></i>'
+                );
+                break;
+            case 2:
+                undo_score = thrown_darts.pop();
+                $('.player.active').find('#dart-2').html(
+                '<i class="far fa-long-arrow-alt-right"></i>'
+                );
+                break;
+            case 3:
+                undo_score = thrown_darts.pop();
+                $('.player.active').find('#dart-3').html(
+                '<i class="far fa-long-arrow-alt-right"></i>'
+                );
+                break;
+            default:
+                break;
+        }
+        let score = parseInt($('.player.active').find('.score').text());
+        score = score + undo_score;
+        $('.player.active').find('.score').text(score);
+    });
+
     $('#next-player').click(function () {
         console.log(thrown_darts);
         if (thrown_darts.length < 3) {
