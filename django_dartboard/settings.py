@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-from django.urls import reverse
+from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_APP_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -102,7 +102,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = reverse('home')
+LOGIN_REDIRECT_URL = reverse_lazy('home')
 
 
 ###################
