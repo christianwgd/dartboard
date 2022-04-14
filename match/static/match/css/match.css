@@ -24,6 +24,15 @@
     font-size: 6rem;
 }
 
+@media (max-width: 767px) {
+    .score {
+        font-size: 4rem;
+    }
+    .player {
+        min-height: 9rem;
+    }
+}
+
 #id_score_pl1 {
     padding-right: 1rem;
 }
