@@ -64,8 +64,9 @@ $(document).ready(function() {
     $('#next-player').click(function () {
         console.log(thrown_darts);
         if (thrown_darts.length < 3) {
-            alert('not all darts thrown');
-            return;
+            while (thrown_darts.length < 3) {
+                thrown_darts.push(0);
+            }
         }
         // Send post request to save thrown darts and reload page with other player active?
         let match_id = $('#match_id').text();
