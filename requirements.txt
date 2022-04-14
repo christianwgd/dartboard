@@ -1,3 +1,4 @@
 Django==4.0.4
 django-bootstrap5==21.3
 git+https://github.com/christianwgd/django-avatar.git
+six==1.16.0
