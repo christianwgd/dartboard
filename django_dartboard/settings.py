@@ -100,6 +100,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+###################
+# AVATAR SETTINGS #
+###################
+AVATAR_GRAVATAR_DEFAULT = 'identicon'
+AVATAR_CLEANUP_DELETED = True
+AVATAR_THUMB_FORMAT = "PNG"
 
 ##################
 # LOCAL SETTINGS #
