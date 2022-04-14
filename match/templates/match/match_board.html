@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static l10n i18n django_bootstrap5 %}
+{% load static l10n i18n django_bootstrap5 board_tags %}
 
 {% block bootstrap5_extra_head %}
 {{ block.super }}
@@ -96,13 +96,13 @@
     {% for mult in multipliers %}
     <div class="col-lg-4 col-md-12 field-section field-section-{{ mult }}">
         {% for field in fields %}
-            {% if forloop.first %}<div class="row row-col-5">{% endif %}
+            {% if forloop.first %}<div class="row row-col-4">{% endif %}
             <div class="col field-container d-flex justify-content-center">
-                <div class="field" data-value="{{ field }}" data-multiplier="{{ mult }}">
-                    {{ field }}
+                <div class="field" data-value="{{ field|reverse }}" data-multiplier="{{ mult }}">
+                    {{ field|reverse }}
                 </div>
             </div>
-            {% if forloop.counter|divisibleby:5 %}</div><div class="row row-col-5">{% endif %}
+            {% if forloop.counter|divisibleby:4 %}</div><div class="row row-col-4">{% endif %}
             {% if forloop.last %}</div>{% endif %}
         {% endfor %}
     </div>
