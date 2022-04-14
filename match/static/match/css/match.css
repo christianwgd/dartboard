@@ -43,10 +43,8 @@
     content: '.';
     position: absolute;
     bottom: 10px;
-    left: 1.5rem;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1rem;
+    left: 50%;
+    margin-left: -2px;
 }
 
 .field-section-2 {
@@ -57,10 +55,8 @@
     content: '..';
     position: absolute;
     bottom: 10px;
-    left: 1.5rem;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1rem;
+    left: 50%;
+    margin-left: -4px;
 }
 
 .field-section-3 {
@@ -71,24 +67,23 @@
     content: '...';
     position: absolute;
     bottom: 10px;
-    left: 1.5rem;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1rem;
+    left: 50%;
+    margin-left: -6px;
 }
 
 .field-container {
-    position: relative;;
+    position: relative;
+    padding: 0 5px;
 }
 
 .field {
     border: 1px solid gray;
     border-radius: 5px;
-    padding: .5rem;
+    padding: 12px;
     text-align: center;
-    margin-top: .5rem;
-    margin-bottom: .5rem;
-    width: 2.5rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
 }
 
 .field:active {

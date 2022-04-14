@@ -97,7 +97,7 @@
     <div class="col-lg-4 col-md-12 field-section field-section-{{ mult }}">
         {% for field in fields %}
             {% if forloop.first %}<div class="row row-col-5">{% endif %}
-            <div class="col field-container">
+            <div class="col field-container d-flex justify-content-center">
                 <div class="field" data-value="{{ field }}" data-multiplier="{{ mult }}">
                     {{ field }}
                 </div>
