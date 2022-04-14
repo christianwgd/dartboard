@@ -10,6 +10,7 @@ from player.models import Player, League
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ['image_tag', 'player_name', ]
     list_display_links = ['image_tag', 'player_name']
+    search_fields = ['player_name']
 
     @staticmethod
     def player_name(obj):
@@ -29,3 +30,4 @@ class PlayerAdmin(admin.ModelAdmin):
 @admin.register(League)
 class LeagueAdmin(admin.ModelAdmin):
     list_display = ['name']
+    autocomplete_fields = ['players']
