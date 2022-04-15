@@ -21,7 +21,9 @@ $(document).ready(function() {
             let score = $('.player.active').find('.score').text();
             thrown_darts.push(val * mult);
             let check_score = score - (val * mult);
-            if (check_score < 0) {
+            // 1 or below 0 is busted
+            // 0 -> Check if out according to game outage
+            if (check_score < 0 || check_score == 1)  {
                 alert("{% trans 'Busted' %}")
             } else {
                 score = check_score;
