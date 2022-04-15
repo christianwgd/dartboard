@@ -28,7 +28,6 @@ admin.sites.AdminSite.site_title = _('Dartboard administraion')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('select2/', include('django_select2.urls')),
     path('', views.index, name='home'),
     path('player/', include('player.urls')),
     path('match/', include('match.urls')),

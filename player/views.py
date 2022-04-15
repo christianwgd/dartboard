@@ -1,3 +1,4 @@
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import auth
 from django.urls import reverse
@@ -74,7 +75,7 @@ class LeagueListView(LoginRequiredMixin, ListView):
         return manager.is_manager_for_league.all()
 
 
-class LeagueCreateView(LoginRequiredMixin, CreateView):
+class LeagueCreateView(LoginRequiredMixin, BSModalCreateView):
     model = League
     form_class = LeagueForm
 
@@ -82,13 +83,12 @@ class LeagueCreateView(LoginRequiredMixin, CreateView):
         return reverse('player:league-list')
 
     def form_valid(self, form):
-        league = form.save(commit=True)
-        league.players.add(self.request.user.player)
+        league = form.save(commit=False)
         league.manager = self.request.user.player
         return super().form_valid(form)
 
 
-class PlayerAddToLeagueView(LoginRequiredMixin, UpdateView):
+class PlayerAddToLeagueView(LoginRequiredMixin, BSModalUpdateView):
     model = League
     form_class = PlayerSelectForm
     template_name = 'player/league_add_player.html'

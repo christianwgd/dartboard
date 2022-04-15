@@ -11,10 +11,10 @@
 
 {% block content %}
 <div class="row mt-3">
-    <div class="col-md-6 col-sm-12">
+    <div class="col-6 offset-3">
         <form role="form" class="form-horizontal" method="post" novalidate>
             {% csrf_token %}
-            {% bootstrap_form form %}
+            {% bootstrap_form form layout='floating' %}
             <button class="btn btn-primary">
                 <i class="far fa-check"></i>
             </button>
@@ -23,7 +23,9 @@
             </a>
         </form>
     </div>
-    <div class="col-md-6 col-sm-12">
+</div>
+<div class="row mt-3">
+    <div class="col-6 offset-3">
         <div class="card mt-2">
             <div class="card-header">
                 {% trans 'Leagues' %}
@@ -36,7 +38,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <a href="{% url 'player:league-list' %}" class="btn btn-secondary mt-3 float-end">
+        <a href="{% url 'player:league-list' %}" class="btn btn-secondary mt-3">
             <i class="far fa-pen"></i>
         </a>
         </div>

@@ -2,6 +2,10 @@
     font-size: 2rem;
 }
 
+.league {
+    margin-top: .8rem;
+}
+
 .player1, .player2 {
     background-color: #666666;
     color: white;

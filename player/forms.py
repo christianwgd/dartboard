@@ -1,7 +1,7 @@
+from bootstrap_modal_forms.forms import BSModalModelForm
 from django import forms
 from django.contrib import auth
 from django.utils.translation import gettext as _
-from django_select2.forms import Select2MultipleWidget
 
 from player.models import Player, League
 
@@ -40,18 +40,24 @@ class UserForm(forms.models.ModelForm):
         fields = ['username', 'first_name', 'last_name', 'nickname', 'email']
 
 
-class LeagueForm(forms.models.ModelForm):
+class LeagueForm(BSModalModelForm):
 
     class Meta:
         model = League
         fields = ['name']
 
 
-class PlayerSelectForm(forms.models.ModelForm):
+class PlayerSelectForm(BSModalModelForm):
 
     class Meta:
         model = League
         fields = ['players']
         widgets = {
-            'players': Select2MultipleWidget(),
+            'players': forms.CheckboxSelectMultiple,
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['players'].queryset = Player.objects.filter(
+            leagues__in=self.request.user.player.is_manager_for_league.all()
+        ).distinct()

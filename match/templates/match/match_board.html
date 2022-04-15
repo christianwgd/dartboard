@@ -19,12 +19,14 @@
     <div class="col match-type">
         {{ match.get_typus_display }}
     </div>
-    <div class="col best-of">
-        {% trans 'Best of' %}
-        {{ match.best_of }}
-        <br/>
+    <div class="col league">
         {% trans 'League' %}:
         {{ match.league }}
+    </div>
+    <div class="col best-of">
+        Best of {{ match.best_of }}
+        <br/>
+        {{ match.get_out_display }}
     </div>
 </div>
 {% endblock %}

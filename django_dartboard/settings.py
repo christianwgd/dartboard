@@ -20,7 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_APP_PATH = os.path.dirname(os.path.abspath(__file__))
 PROJECT_APP = os.path.basename(PROJECT_APP_PATH)
 
-
 # Settings for tests, override in production with localsettings!
 DEBUG = True
 SECRET_KEY = 'django-insecure-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
@@ -30,7 +29,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'dartboard.db'),
     }
 }
-
 
 # Application definition
 
@@ -42,13 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'django_extensions',
-    'django_select2',
     'accounts',
     'match',
     'player',
     'django_dartboard',
     'avatar',
     'django_bootstrap5',
+    'bootstrap_modal_forms',
 ]
 
 MIDDLEWARE = [
@@ -66,8 +64,7 @@ ROOT_URLCONF = 'django_dartboard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_dartboard.wsgi.application'
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -91,7 +87,6 @@ TIME_ZONE = 'Europe/Berlin'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -104,7 +99,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = reverse_lazy('home')
-
 
 ###################
 # AVATAR SETTINGS #
@@ -123,11 +117,12 @@ AVATAR_THUMB_FORMAT = "PNG"
 
 # Instead of doing "from .local_settings import *", we use exec so that
 # local_settings has full access to everything defined in this module.
-# Also force into sys.modules so it's visible to Django's autoreload.
+# Also force into sys.modules, so it's visible to Django's autoreload.
 
 f = os.path.join(PROJECT_APP_PATH, "localsettings.py")
 if os.path.exists(f):
     import importlib
+
     module_name = f"{PROJECT_APP}.localsettings"
     module = importlib.import_module(module_name)
     module.__file__ = f
