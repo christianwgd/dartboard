@@ -23,7 +23,8 @@ class MatchCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['unfinished'] = Match.objects.filter(
-            Q(player1=self.request.user.player) | Q(player2=self.request.user.player)
+            Q(player1=self.request.user.player) | Q(player2=self.request.user.player),
+            winner=None,
         )
         return ctx
 
