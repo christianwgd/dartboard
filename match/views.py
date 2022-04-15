@@ -65,9 +65,11 @@ def save_turn(request, match_id):
     throw_score = throw1 + throw2 + throw3
     match = Match.objects.get(pk=match_id)
     leg = match.legs.last()
+    ord = match.legs.count() + 1
     Turn.objects.create(
         leg=leg,
         player=player,
+        ord=ord,
         throw1=throw1,
         throw2=throw2,
         throw3=throw3,

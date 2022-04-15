@@ -94,6 +94,7 @@ class Turn(models.Model):
     class Meta:
         verbose_name = _('Turn')
         verbose_name_plural = _('Turns')
+        ordering = ['ord']
 
     def __str__(self):
         return f'{self.leg} {self.player}'
@@ -106,6 +107,7 @@ class Turn(models.Model):
         Player, on_delete=models.SET_NULL, null=True,
         verbose_name=_('Player'), related_name='turns'
     )
+    ord = models.PositiveSmallIntegerField(default=1, verbose_name=_('Ordinal'))
     throw1 = models.PositiveSmallIntegerField(default=0, verbose_name=_('Throw 1'))
     throw2 = models.PositiveSmallIntegerField(default=0, verbose_name=_('Throw 2'))
     throw3 = models.PositiveSmallIntegerField(default=0, verbose_name=_('Throw 3'))
