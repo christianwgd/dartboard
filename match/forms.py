@@ -7,4 +7,4 @@ class MatchForm(models.ModelForm):
 
     class Meta:
         model = Match
-        fields = ['league', 'typus', 'best_of', 'player1', 'player2']
+        fields = ['league', 'best_of', 'typus', 'out', 'player1', 'player2']

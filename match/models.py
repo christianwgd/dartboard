@@ -11,6 +11,10 @@ MATCH_TYPE_CHOICES = (
     ('701', _('701')),
 )
 
+OUT_CHOICES = (
+    ('SO', _('Single Out')),
+    ('DO', _('Double Out')),
+)
 
 class Match(models.Model):
     """
@@ -31,6 +35,10 @@ class Match(models.Model):
     )
     best_of = models.PositiveSmallIntegerField(
         default=3, verbose_name=_('best of')
+    )
+    out = models.CharField(
+        verbose_name=_('Out'), max_length=2,
+        choices=OUT_CHOICES, default='DO'
     )
     timestamp = models.DateTimeField(
         auto_now_add=True, verbose_name=_('Date of match')
@@ -79,7 +87,7 @@ class Leg(models.Model):
         Match, on_delete=models.CASCADE,
         related_name='legs', verbose_name=_('match')
     )
-    ord = models.PositiveSmallIntegerField(default=1, verbose_name=_('Ordinal'))
+    ord = models.PositiveSmallIntegerField(default=1, verbose_name=_('No.'))
     winner = models.ForeignKey(
         Player, on_delete=models.CASCADE,
         related_name='leg_wins', verbose_name=_('Winner'),
@@ -101,13 +109,13 @@ class Turn(models.Model):
 
     leg = models.ForeignKey(
         Leg, on_delete=models.CASCADE,
-        verbose_name=_('Leg'), related_name='rounds'
+        verbose_name=_('Leg'), related_name='turns'
     )
     player = models.ForeignKey(
         Player, on_delete=models.SET_NULL, null=True,
         verbose_name=_('Player'), related_name='turns'
     )
-    ord = models.PositiveSmallIntegerField(default=1, verbose_name=_('Ordinal'))
+    ord = models.PositiveSmallIntegerField(default=1, verbose_name=_('No.'))
     throw1 = models.PositiveSmallIntegerField(default=0, verbose_name=_('Throw 1'))
     throw2 = models.PositiveSmallIntegerField(default=0, verbose_name=_('Throw 2'))
     throw3 = models.PositiveSmallIntegerField(default=0, verbose_name=_('Throw 3'))
