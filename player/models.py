@@ -38,3 +38,7 @@ class League(models.Model):
         Player, verbose_name=_('Players'),
         blank=True, related_name='leagues'
     )
+    manager = models.ForeignKey(
+        Player, verbose_name=_('Manager'), on_delete=models.CASCADE,
+        blank=True, null=True, related_name='is_manager_for_league',
+    )

@@ -7,8 +7,10 @@
 <link rel="stylesheet" type="text/css" href="{% static "player/css/player.css" %}" />
 {% endblock %}
 
+{% block page_title %}<h2 class="text-center mt-3">{% trans 'Player' %}</h2>{% endblock %}
+
 {% block content %}
-<div class="row">
+<div class="row mt-3">
     <div class="col-md-6 col-sm-12">
         <form role="form" class="form-horizontal" method="post" novalidate>
             {% csrf_token %}

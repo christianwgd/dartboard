@@ -7,10 +7,10 @@
 <link rel="stylesheet" type="text/css" href="{% static "player/css/league.css" %}" />
 {% endblock %}
 
-{% block page_title %}{% trans 'Leagues' %}{% endblock %}
+{% block page_title %}<h2 class="text-center mt-3">{% trans 'Leagues' %}</h2>{% endblock %}
 
 {% block content %}
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
+<div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
 {% for league in league_list %}
     <div class="col">
         <div class="card">
@@ -21,20 +21,20 @@
                 {% for player in league.players.all %}
                 <li class="list-group-item">
                     {{ player }}
-                    <a href="" class="btn btn-sm btn-danger float-end"
-                       title="{% trans 'Remove player' %}">
-                        <i class="far fa-minus"></i>
-                    </a>
                 </li>
                 {% empty %}
                 <li class="list-group-item">
-                    {% trans 'Player is not in any league' %}
+                    {% trans 'No player in this league' %}
                 </li>
                 {% endfor %}
                 <li class="list-group-item" style="padding: 5px;">
                     <a href="{% url 'player:create' league.id %}" class="btn btn-sm btn-success"
                        title="{% trans 'Add player' %}">
                         <i class="far fa-plus"></i>
+                    </a>
+                    <a href="{% url 'player:add-to-league' league.id %}" class="btn btn-sm btn-secondary"
+                       title="{% trans 'Add player' %}">
+                        <i class="far fa-users"></i>
                     </a>
                 </li>
             </ul>
@@ -44,7 +44,7 @@
 </div>
 <div class="row mt-3">
     <div class="col">
-        <a href="" class="btn btn-success" title="{% trans 'Add league' %}">
+        <a href="{% url 'player:league-create' %}" class="btn btn-success" title="{% trans 'Add league' %}">
             <i class="far fa-plus"></i>
         </a>
     </div>

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static l10n i18n django_bootstrap5 %}
+
+{% block bootstrap5_extra_head %}
+{{ block.super }}
+{{ form.media.css }}
+<link rel="stylesheet" type="text/css" href="{% static "player/css/league.css" %}" />
+{% endblock %}
+
+{% block bootstrap5_extra_script %}
+{{ block.super }}
+{{ form.media.js }}
+{% endblock %}
+
+{% block page_title %}
+<h2 class="text-center mt-3">
+    {% trans 'Manage players for league' %}: {{ league }}
+</h2>
+{% endblock %}
+
+{% block content %}
+<div class="row mt-3">
+    <div class="col-6 offset-3">
+        <form role="form" class="form-horizontal" method="post" novalidate>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-primary">
+                <i class="far fa-check"></i>
+            </button>
+            <a href="{% url 'player:league-list' %}" class="btn btn-secondary">
+                <i class="far fa-times"></i>
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

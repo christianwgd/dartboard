@@ -1,9 +1,9 @@
 from django import forms
 from django.contrib import auth
 from django.utils.translation import gettext as _
+from django_select2.forms import Select2MultipleWidget
 
-from player.models import Player
-
+from player.models import Player, League
 
 User = auth.get_user_model()
 
@@ -38,3 +38,20 @@ class UserForm(forms.models.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'nickname', 'email']
+
+
+class LeagueForm(forms.models.ModelForm):
+
+    class Meta:
+        model = League
+        fields = ['name']
+
+
+class PlayerSelectForm(forms.models.ModelForm):
+
+    class Meta:
+        model = League
+        fields = ['players']
+        widgets = {
+            'players': Select2MultipleWidget(),
+        }

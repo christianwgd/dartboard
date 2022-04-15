@@ -3,7 +3,7 @@ from django.contrib import auth
 from django.urls import reverse
 from django.views.generic import UpdateView, ListView, CreateView
 
-from player.forms import PlayerForm, UserForm
+from player.forms import PlayerForm, UserForm, LeagueForm, PlayerSelectForm
 from player.models import Player, League
 
 
@@ -68,3 +68,30 @@ class PlayerUpdateView(LoginRequiredMixin, UpdateView):
 
 class LeagueListView(LoginRequiredMixin, ListView):
     model = League
+
+    def get_queryset(self):
+        manager = self.request.user.player
+        return manager.is_manager_for_league.all()
+
+
+class LeagueCreateView(LoginRequiredMixin, CreateView):
+    model = League
+    form_class = LeagueForm
+
+    def get_success_url(self):
+        return reverse('player:league-list')
+
+    def form_valid(self, form):
+        league = form.save(commit=True)
+        league.players.add(self.request.user.player)
+        league.manager = self.request.user.player
+        return super().form_valid(form)
+
+
+class PlayerAddToLeagueView(LoginRequiredMixin, UpdateView):
+    model = League
+    form_class = PlayerSelectForm
+    template_name = 'player/league_add_player.html'
+
+    def get_success_url(self):
+        return reverse('player:league-list')
