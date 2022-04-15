@@ -3,7 +3,7 @@
 
 {% block page_title %}
 <h2 class="text-center mt-3">
-    {% trans 'Welcome to dartboard,' %} {{ request.user }}!
+    {% trans 'Welcome ' %} {{ request.user }}!
 </h2>
 {% endblock %}
 
@@ -11,7 +11,7 @@
 <div class="row text-center">
     <div class="col">
         <a href="{% url 'match:create' %}">
-            <img src="{% static 'img/dartboard.png' %}" alt="{% trans 'Dartboard' %}" >
+            <img src="{% static 'img/dartboard.svg' %}" width="400px" alt="{% trans 'Dartboard' %}" >
         </a>
     </div>
 </div>

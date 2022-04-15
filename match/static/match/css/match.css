@@ -12,7 +12,7 @@
 }
 
 .player.active {
-    background-color: firebrick;
+    background-color: #d0a46b;
 }
 
 .player-name {
@@ -102,7 +102,7 @@
 }
 
 .field:active {
-    background: darkgray;
+    background: #d0a46b;
 }
 
 .throws .throw {
