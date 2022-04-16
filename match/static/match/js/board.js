@@ -10,6 +10,25 @@ function resetThrows() {
     );
 }
 
+function get_checkout(score) {
+     $.ajax({
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: `http://wgdsrv.fritz.box:5017/checkout/${score}`,
+            type: "GET",
+            crossDomain: true,
+            contentType: "text/html",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr, status, x) {
+                console.log(xhr, status, x);
+                alert("error");
+            }
+        });
+}
+
 
 $(document).ready(function() {
     let thrown_darts = [];
@@ -24,7 +43,7 @@ $(document).ready(function() {
             // 1 or below 0 is busted
             // 0 -> Check if out according to game outage
             if (check_score < 0 || check_score == 1)  {
-                alert("{% trans 'Busted' %}")
+                $('.player.active').find('.score').addClass('busted');
             } else {
                 score = check_score;
                 $('.player.active').find('.score').text(score);
