@@ -16,7 +16,7 @@ class UserCreateView(LoginRequiredMixin, CreateView):
     form_class = UserForm
 
     def get_success_url(self):
-        return reverse('home')
+        return reverse('player:league-list')
 
     def form_valid(self, form):
         user = form.save(commit=True)
