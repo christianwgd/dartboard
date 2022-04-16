@@ -11,14 +11,14 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-6 offset-3">
+    <div class="col-md-6 offset-md-3 col-sm-12">
         <form role="form" class="form-horizontal" method="post" novalidate>
             {% csrf_token %}
             {% bootstrap_form form layout='floating' %}
             <button class="btn btn-primary">
                 <i class="far fa-check"></i>
             </button>
-            <a href="{% url 'home' %}" class="btn btn-secondary">
+            <a href="{% url 'player:league-list' %}" class="btn btn-secondary">
                 <i class="far fa-times"></i>
             </a>
         </form>

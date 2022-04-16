@@ -20,7 +20,7 @@
     </p>
     {% endif %}
 
-    <div class="col-md-4 offset-md-4">
+    <div class="col-md-4 offset-md-4 col-sm-12">
         <form role="form" action="{{ app_path }}" method="post" id="login-form" novalidate>
             {% csrf_token %}
             {% bootstrap_form form %}
