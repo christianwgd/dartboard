@@ -52,6 +52,3 @@ class PlayerSelectForm(BSModalModelForm):
     class Meta:
         model = League
         fields = ['players']
-        widgets = {
-            'players': forms.CheckboxSelectMultiple,
-        }

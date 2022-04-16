@@ -12,6 +12,13 @@
     <div class="modal-body">
         <div class="{% if form.non_field_errors %}is-invalid{% endif %}"></div>
         {% bootstrap_form form layout='floating' %}
+        <script>
+        $(document).ready(function() {
+            $('#id_players').select2({
+                dropdownParent: $("#modal")
+            });
+        });
+        </script>
     </div>
 
     <div class="modal-footer">

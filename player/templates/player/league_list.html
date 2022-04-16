@@ -4,14 +4,16 @@
 {% block bootstrap5_extra_head %}
 {{ block.super }}
 {{ form.media.css }}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.5.2/dist/select2-bootstrap4.min.css">
 <link rel="stylesheet" type="text/css" href="{% static "player/css/league.css" %}" />
 {% endblock %}
 
 {% block bootstrap5_extra_script %}
 {{ block.super }}
 {{ form.media.js }}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
-<script src="{% static 'django_select2/django_select2.js' %}"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
