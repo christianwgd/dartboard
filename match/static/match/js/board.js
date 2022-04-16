@@ -10,6 +10,24 @@ function resetThrows() {
     );
 }
 
+const animateCSS = (node, animation, prefix = 'animate__') =>
+  // We create a Promise and return it
+  new Promise((resolve, reject) => {
+    const animationName = `${prefix}${animation}`;
+    //const node = document.querySelector(element);
+
+    node.classList.add(`${prefix}animated`, animationName);
+
+    // When the animation ends, we clean the classes and resolve the Promise
+    function handleAnimationEnd(event) {
+      event.stopPropagation();
+      node.classList.remove(`${prefix}animated`, animationName);
+      resolve('Animation ended');
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd, {once: true});
+  });
+
 $(document).ready(function() {
     let thrown_darts = [];
 
@@ -17,13 +35,19 @@ $(document).ready(function() {
         if (thrown_darts.length < 3) {
             let val = $(this).data('value');
             let mult = $(this).data('multiplier');
-            let score = $('.player.active').find('.score').text();
+            let $score_el = $('.player.active').find('.score');
+            let score = $score_el.text();
             thrown_darts.push(val * mult);
             let check_score = score - (val * mult);
             // 1 or below 0 is busted
             // 0 -> Check if out according to game outage
             if (check_score < 0 || check_score == 1)  {
-                alert("{% trans 'Busted' %}")
+                $score_el.addClass('animate__animated animate__backOutDown');
+                setTimeout(function () {
+                    $score_el.removeClass('animate__animated animate__backOutDown');
+                    $score_el.text($('.player.active').find('.score').text());
+                    $score_el.addClass('animate__animated animate__backInDown');
+                }, 1000)
             } else {
                 score = check_score;
                 $('.player.active').find('.score').text(score);
