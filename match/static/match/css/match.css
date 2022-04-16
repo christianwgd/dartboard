@@ -180,3 +180,19 @@
 #next-player:active {
     opacity: .6;
 }
+
+.busted {
+  animation-name: bust;
+  animation-duration: 2s;
+}
+
+@keyframes bust {
+    from {
+        transform:rotate(0deg) scale(1);
+        opacity: 100;
+    }
+    to {
+        transform:rotate(1080deg) scale(0);
+        opacity: 0;
+    }
+}
