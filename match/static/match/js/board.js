@@ -30,6 +30,7 @@ const animateCSS = (node, animation, prefix = 'animate__') =>
 
 $(document).ready(function() {
     let thrown_darts = [];
+    $('.'+set_active).addClass('active');
 
     $('.field').click(function () {
         if (thrown_darts.length < 3) {

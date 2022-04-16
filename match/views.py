@@ -46,12 +46,25 @@ class MatchBoardView(LoginRequiredMixin, DetailView):
         ctx['multipliers'] = [1, 2, 3]
         ctx['fields'] = range(1, 21)
         leg = self.object.legs.latest('ord')
-        p1_turn = leg.turns.filter(player=self.object.player1).latest('ord')
-        ctx['p1_latest_score'] = p1_turn.throw1 + p1_turn.throw2 + p1_turn.throw3
-        ctx['p1_old_score'] = self.object.score_player1 + ctx['p1_latest_score']
-        p2_turn = leg.turns.filter(player=self.object.player2).latest('ord')
-        ctx['p2_latest_score'] = p2_turn.throw1 + p2_turn.throw2 + p2_turn.throw3
-        ctx['p2_old_score'] = self.object.score_player2 + ctx['p2_latest_score']
+        try:
+            p1_turn = leg.turns.filter(player=self.object.player1).latest('ord')
+            ctx['p1_latest_score'] = p1_turn.throw1 + p1_turn.throw2 + p1_turn.throw3
+            ctx['p1_old_score'] = self.object.score_player1 + ctx['p1_latest_score']
+        except Turn.DoesNotExist:
+            p1_turn = None
+        try:
+            p2_turn = leg.turns.filter(player=self.object.player2).latest('ord')
+            ctx['p2_latest_score'] = p2_turn.throw1 + p2_turn.throw2 + p2_turn.throw3
+            ctx['p2_old_score'] = self.object.score_player2 + ctx['p2_latest_score']
+        except Turn.DoesNotExist:
+            p2_turn = None
+        if p1_turn and p2_turn:
+            if p1_turn.ord < p2_turn.ord:
+                ctx['active'] = 'player1'
+            else:
+                ctx['active'] = 'player2'
+        else:
+            ctx['active'] = 'player1'
         return ctx
 
 

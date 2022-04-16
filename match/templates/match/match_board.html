@@ -10,6 +10,7 @@
 {{ block.super }}
 <script>
     let csrftoken = '{{ csrf_token }}';
+    let set_active = '{{ active }}';
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <script src="{% static 'match/js/board.js' %}"></script>
@@ -35,7 +36,7 @@
 {% block content %}
 <span class="hidden" id="match_id">{{ match.id }}</span>
 <div class="row">
-    <div class="col-6 col-xs-12 player player1 active">
+    <div class="col-6 col-xs-12 player player1">
         <div class="row">
             <div class="col-6">
                 <div class="row">
