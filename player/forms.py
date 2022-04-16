@@ -55,9 +55,3 @@ class PlayerSelectForm(BSModalModelForm):
         widgets = {
             'players': forms.CheckboxSelectMultiple,
         }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['players'].queryset = Player.objects.filter(
-            leagues__in=self.request.user.player.is_manager_for_league.all()
-        ).distinct()
