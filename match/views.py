@@ -25,7 +25,7 @@ class MatchCreateView(LoginRequiredMixin, CreateView):
         ctx['unfinished'] = Match.objects.filter(
             Q(player1=self.request.user.player) | Q(player2=self.request.user.player),
             winner=None,
-        )
+        )[:3]
         return ctx
 
     def form_valid(self, form):
