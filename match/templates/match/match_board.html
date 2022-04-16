@@ -11,6 +11,7 @@
 <script>
     let csrftoken = '{{ csrf_token }}';
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <script src="{% static 'match/js/board.js' %}"></script>
 {% endblock %}
 
@@ -54,19 +55,23 @@
                     </div>
                 </div>
                 <div class="row old-score-left">
-                    <div class="col-2 old-score"></div>
-                    <div class="col-2 throw-score"></div>
+                    <div class="col-2 old-score">{{ p1_old_score }}</div>
+                    <div class="col-2 throw-score">{{ p1_latest_score }}</div>
                 </div>
             </div>
             <div class="col-6 d-flex justify-content-end">
-                <span id="id_score_pl1" class="score">{{ match.score_player1 }}</span>
+                <span id="id_score_pl1" class="score">
+                    {{ match.score_player1 }}
+                </span>
             </div>
         </div>
     </div>
     <div class="col-6 col-xs-12 player player2">
         <div class="row justify-content-end">
             <div class="col-6 justify-content-end">
-                <span id="id_score_pl2" class="score">{{ match.score_player2 }}</span>
+                <span id="id_score_pl2" class="score">
+                    {{ match.score_player2 }}
+                </span>
             </div>
             <div class="col-6">
                 <div class="row">
@@ -86,8 +91,8 @@
                     </div>
                 </div>
                 <div class="row old-score-right justify-content-end">
-                    <div class="col-2 throw-score"></div>
-                    <div class="col-2 old-score"></div>
+                    <div class="col-2 throw-score">{{ p2_latest_score }}</div>
+                    <div class="col-2 old-score">{{ p2_old_score }}</div>
                 </div>
             </div>
         </div>
