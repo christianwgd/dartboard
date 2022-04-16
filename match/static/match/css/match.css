@@ -7,12 +7,12 @@
 }
 
 .player1, .player2 {
-    background-color: #666666;
+    background-color: #888888;
     color: white;
 }
 
 .player.active {
-    background-color: #d0a46b;
+    background-color: #336666;
 }
 
 .player-name {
@@ -119,18 +119,27 @@
 }
 
 .buttons {
-    padding: .5rem;
     background-color: lightgray;
 }
 
-.btn-lg {
-    margin: 0 1rem;
+.buttons-left .btn-lg {
+    margin-right: 1rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 10rem;
+    height: 6rem;
+}
+
+.buttons-right .btn-lg {
+    margin-left: 1rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 10rem;
     height: 6rem;
 }
 
 .delete {
-    color: red;
+    color: #A7564F;
 }
 
 .hidden {
@@ -148,4 +157,26 @@
 
 .throw-score {
     color: #cccccc;
+}
+
+#undo {
+    background-color: #A7564F;
+    color: white;
+}
+#undo:hover {
+    opacity: .8;
+}
+#undo:active {
+    opacity: .6;
+}
+
+#next-player {
+    background-color: #336666;
+    color: white;
+}
+#next-player:hover {
+    opacity: .8;
+}
+#next-player:active {
+    opacity: .6;
 }
