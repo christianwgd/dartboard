@@ -15,12 +15,22 @@
         <form role="form" class="form-horizontal" method="post" novalidate>
             {% csrf_token %}
             {% bootstrap_form form layout='floating' %}
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" title="{% trans 'Save' %}">
                 <i class="far fa-check"></i>
             </button>
-            <a href="{% url 'home' %}" class="btn btn-secondary">
+            <a href="{% url 'home' %}" class="btn btn-secondary" title="{% trans 'Cancel' %}">
                 <i class="far fa-times"></i>
             </a>
+            <div class="float-end">
+                <a href="{% url 'logout' %}" class="btn btn-secondary"
+                   title="{% trans 'Logout' %}">
+                    <i class="far fa-sign-out"></i>
+                </a>
+                <a href="{% url 'password_change' %}" class="btn btn-secondary"
+                   title="{% trans 'Change password' %}">
+                    <i class="far fa-key"></i>
+                </a>
+            </div>
         </form>
     </div>
 </div>
