@@ -1,6 +1,7 @@
 .status-bar {
     background-color: lightgray;
     height: 4rem;
+    padding: 0;
 }
 
 .img-avatar {
@@ -12,4 +13,13 @@
 
 .page_title {
     text-align: center;
+}
+
+.logo {
+    margin-top: -8px;
+    width: 80px;
+}
+
+.logo-large {
+    width: 70vw;
 }
