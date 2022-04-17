@@ -1,10 +1,10 @@
 .status-bar {
     background-color: lightgray;
     height: 4rem;
-    padding: .4rem;
 }
 
 .img-avatar {
+    margin-top: 7px;
     border: 1px solid #333;
     border-radius: 50%;
     background-color: white;
