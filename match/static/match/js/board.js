@@ -26,12 +26,37 @@ const animateCSS = (node, animation, prefix = 'animate__') =>
     }
 
     node.addEventListener('animationend', handleAnimationEnd, {once: true});
-  });
+});
+
+function update_checkout_way() {
+    let remaining = parseInt($('.player.active').find('.score').text());
+    console.log(remaining);
+    $.ajax({
+        url: `http://wgdsrv.fritz.box:5017/checkout/${remaining}`,
+        type: "GET",
+        crossDomain: true,
+        contentType: "application/json",
+        success: function (response) {
+            if (response == null) return;
+            let darts = response["darts"];
+            let i = 1;
+            for (let dart of darts) {
+                $('.player.active').find(`#dart-${i}-suggestion`).text(`${dart.region.charAt(0)}${dart.field}`);
+                i++;
+            }
+        },
+        error: function (xhr, status) {
+            console.log(xhr, status);
+            alert("error");
+        }
+    });
+}
+
 
 $(document).ready(function() {
     let thrown_darts = [];
     $('.'+set_active).addClass('active');
-
+    update_checkout_way();
     $('.field').click(function () {
         if (thrown_darts.length < 3) {
             let val = $(this).data('value');
