@@ -73,10 +73,6 @@ def delete_match(request, match_id):
     return redirect(reverse('match:create'))
 
 
-def is_even(ordinal):
-    return (ordinal % 2) == 0
-
-
 # pylint: disable=too-many-locals
 @require_http_methods(["POST"])
 def save_turn(request, match_id):
@@ -107,19 +103,16 @@ def save_turn(request, match_id):
         Leg.objects.create(match=match, ord=new_ord)
         throw_score = 0
         old_score = 0
-        if is_even(new_ord):
-            next_player = match.player1
-        else:
-            next_player = match.player2
+        next_player = (ordinal % 2) + 1
     else:
         if player == match.player1:
             old_score = match.score_player1
             match.score_player1 -= throw_score
-            next_player = match.player2
+            next_player = 2
         elif player == match.player2:
             old_score = match.score_player2
             match.score_player2 -= throw_score
-            next_player = match.player1
+            next_player = 1
         else:
             return JsonResponse(json.dumps({'success': False, 'reason': 'Player is not in match'}))
         match.save()
