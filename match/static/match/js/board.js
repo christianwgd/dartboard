@@ -30,7 +30,6 @@ const animateCSS = (node, animation, prefix = 'animate__') =>
 
 function update_checkout_way() {
     let remaining = parseInt($('.player.active').find('.score').text());
-    console.log(remaining);
     $.ajax({
         url: `http://wgdsrv.fritz.box:5017/checkout/${remaining}`,
         type: "GET",
@@ -38,11 +37,20 @@ function update_checkout_way() {
         contentType: "application/json",
         success: function (response) {
             if (response == null) return;
+            $('.player.active').find('.suggestion').css('visibility', 'visible')
             let darts = response["darts"];
             let i = 1;
             for (let dart of darts) {
                 $('.player.active').find(`#dart-${i}-suggestion`).text(`${dart.region.charAt(0)}${dart.field}`);
                 i++;
+            }
+            // Only 2 darts needed for checkout
+            if (i < 4) {
+                $('.player.active').find('#dart-3-suggestion').text('');
+            }
+            // Only 1 dart needed for checkout
+            if (i < 3) {
+                $('.player.active').find('#dart-2-suggestion').text('');
             }
         },
         error: function (xhr, status) {
@@ -130,6 +138,7 @@ $(document).ready(function() {
                 } else {
                     alert(ret.reason);
                 }
+                update_checkout_way();
              },
         });
         thrown_darts = [];
