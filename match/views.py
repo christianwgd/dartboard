@@ -85,6 +85,7 @@ def save_turn(request, match_id):
         return JsonResponse(json.dumps({'success': False, 'reason': 'No player provided'}))
     player = Player.objects.get(pk=player_id)
     throws = [int(request.POST.get(f'throw{i}', 0)) for i in range(3)]
+    throw_score = sum(throws)
     match = Match.objects.get(pk=match_id)
     leg = match.legs.last()
     ordinal = leg.turns.count() + 1
@@ -110,11 +111,11 @@ def save_turn(request, match_id):
     else:
         if player == match.player1:
             old_score = match.score_player1
-            match.score_player1 -= sum(throws)
+            match.score_player1 -= throw_score
             next_player = match.player2
         elif player == match.player2:
             old_score = match.score_player2
-            match.score_player2 -= sum(throws)
+            match.score_player2 -= throw_score
             next_player = match.player1
         else:
             return JsonResponse(json.dumps({'success': False, 'reason': 'Player is not in match'}))
