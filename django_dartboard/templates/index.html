@@ -8,12 +8,33 @@
 {% endblock %}
 
 {% block content %}
-<div class="row text-center">
-    <div class="col">
-        <a href="{% url 'match:create' %}">
-            <img class="logo-large" src="{% static 'img/dartboard.svg' %}"
-                 alt="{% trans 'Dartboard' %}" >
-        </a>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Start new game</h5>
+        <p class="card-text">Create a new match in your desired game format.</p>
+        <a href="{% url 'match:create' %}" class="btn btn-success">Play!</a>
+      </div>
     </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">User settings</h5>
+        <p class="card-text">Edit user nickname, email and other attributes.</p>
+        <a href="{% url 'player:update' %}" class="btn btn-primary">Edit user</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">League Settings</h5>
+        <p class="card-text">Manage Leagues and their players.</p>
+        <a href="{% url 'player:league-list' %}" class="btn btn-primary">Edit leagues</a>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
