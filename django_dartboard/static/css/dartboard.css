@@ -5,7 +5,7 @@
 }
 
 .img-avatar {
-    border: 1px solid #333;
+    border: none;
     border-radius: 50%;
     background-color: white;
 }
