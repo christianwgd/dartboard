@@ -65,6 +65,7 @@ $(document).ready(function() {
     let thrown_darts = [];
     $('.'+set_active).addClass('active');
     update_checkout_way();
+    let double_out = $('#out-type').text() === "Double Out";
     $('.field').click(function () {
         if (thrown_darts.length < 3) {
             let val = $(this).data('value');
@@ -75,14 +76,11 @@ $(document).ready(function() {
             let check_score = score - (val * mult);
             // 1 or below 0 is busted
             // 0 -> Check if out according to game outage
-            if (check_score === 0) {
-                let double_out = $('.match-type').text() === "Double Out";
+            if (check_score === 0 && (!double_out || mult === 2)) {
                 let player_name = $('.player.active').find('.player-name').text().trim();
-                if (!double_out || mult === 2) {
-                    $('.player.active').find('.score').text(check_score);
-                    alert(`${player_name} has won the leg.`);
-                }
-            } else if (check_score < 0 || check_score === 1)  {
+                $('.player.active').find('.score').text(check_score);
+                alert(`${player_name} has won the leg.`);
+            } else if (check_score <= 1)  {
                 $score_el.addClass('animate__animated animate__backOutDown');
                 setTimeout(function () {
                     $score_el.removeClass('animate__animated animate__backOutDown');
