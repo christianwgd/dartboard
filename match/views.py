@@ -73,17 +73,17 @@ def delete_match(request, match_id):
     return redirect(reverse('match:create'))
 
 
-def is_even(ord):
-    return (ord % 2) == 0
+def is_even(ordinal):
+    return (ordinal % 2) == 0
 
 
+# pylint: disable=too-many-locals
 @require_http_methods(["POST"])
 def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
     won = request.POST.get('won', False)
     if not player_id:
         return JsonResponse(json.dumps({'success': False, 'reason': 'No player provided'}))
-    winner_id = request.POST.get('winner_id', None)
     player = Player.objects.get(pk=player_id)
     throw1 = int(request.POST.get('throw1', 0))
     throw2 = int(request.POST.get('throw2', 0))
