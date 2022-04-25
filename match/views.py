@@ -121,5 +121,4 @@ def save_turn(request, match_id):
         'old_score': old_score,
         'next_player': next_player
     }
-    print(return_data)
     return JsonResponse(json.dumps(return_data), safe=False)
