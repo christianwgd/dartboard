@@ -77,7 +77,6 @@ def is_even(ordinal):
     return (ordinal % 2) == 0
 
 
-# pylint: disable=too-many-locals
 @require_http_methods(["POST"])
 def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
@@ -85,10 +84,7 @@ def save_turn(request, match_id):
     if not player_id:
         return JsonResponse(json.dumps({'success': False, 'reason': 'No player provided'}))
     player = Player.objects.get(pk=player_id)
-    throw1 = int(request.POST.get('throw1', 0))
-    throw2 = int(request.POST.get('throw2', 0))
-    throw3 = int(request.POST.get('throw3', 0))
-    throw_score = throw1 + throw2 + throw3
+    throws = [int(request.POST.get(f'throw{i}', 0)) for i in range(3)]
     match = Match.objects.get(pk=match_id)
     leg = match.legs.last()
     ordinal = leg.turns.count() + 1
@@ -96,9 +92,9 @@ def save_turn(request, match_id):
         leg=leg,
         player=player,
         ord=ordinal,
-        throw1=throw1,
-        throw2=throw2,
-        throw3=throw3,
+        throw1=throws[0],
+        throw2=throws[1],
+        throw3=throws[2],
     )
     if won:
         leg.winner = player
@@ -114,11 +110,11 @@ def save_turn(request, match_id):
     else:
         if player == match.player1:
             old_score = match.score_player1
-            match.score_player1 -= throw_score
+            match.score_player1 -= sum(throws)
             next_player = match.player2
         elif player == match.player2:
             old_score = match.score_player2
-            match.score_player2 -= throw_score
+            match.score_player2 -= sum(throws)
             next_player = match.player1
         else:
             return JsonResponse(json.dumps({'success': False, 'reason': 'Player is not in match'}))
