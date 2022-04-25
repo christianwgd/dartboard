@@ -30,4 +30,4 @@ class PlayerAdmin(admin.ModelAdmin):
 @admin.register(League)
 class LeagueAdmin(admin.ModelAdmin):
     list_display = ['name']
-    autocomplete_fields = ['players']
+    autocomplete_fields = ['players', 'managers']
