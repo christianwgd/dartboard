@@ -71,8 +71,8 @@ class LeagueListView(LoginRequiredMixin, ListView):
     model = League
 
     def get_queryset(self):
-        manager = self.request.user.player
-        return manager.is_manager_for_league.all()
+        player = self.request.user.player
+        return player.managed_leagues.all()
 
 
 class LeagueCreateView(LoginRequiredMixin, BSModalCreateView):
@@ -84,7 +84,8 @@ class LeagueCreateView(LoginRequiredMixin, BSModalCreateView):
 
     def form_valid(self, form):
         league = form.save(commit=False)
-        league.manager = self.request.user.player
+        league.save()
+        league.managers.add(self.request.user.player)
         return super().form_valid(form)
 
 

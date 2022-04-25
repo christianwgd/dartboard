@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib import auth
+from django.dispatch import receiver
 from django.utils.translation import gettext as _
 
 
@@ -33,12 +34,15 @@ class League(models.Model):
     def __str__(self):
         return self.name
 
+    def is_manager(self, player):
+        return player in self.managers
+
     name = models.CharField(_('Name'), max_length=50)
     players = models.ManyToManyField(
         Player, verbose_name=_('Players'),
         blank=True, related_name='leagues'
     )
-    manager = models.ForeignKey(
-        Player, verbose_name=_('Manager'), on_delete=models.CASCADE,
-        blank=True, null=True, related_name='is_manager_for_league',
+    managers = models.ManyToManyField(
+        Player, verbose_name=_('Manager'),
+        related_name='managed_leagues'
     )
