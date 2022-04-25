@@ -110,8 +110,8 @@ $(document).ready(function() {
         }
     });
 
-    $('#next-player').click(function () {
-        console.log(thrown_darts);
+    $('#next-player, #next-leg').click(function () {
+        let pressed_button = $(this);
         if (thrown_darts.length < 3) {
             while (thrown_darts.length < 3) {
                 thrown_darts.push(0);
@@ -133,6 +133,13 @@ $(document).ready(function() {
                 let ret = JSON.parse(data);
                 resetThrows();
                 if (ret.success) {
+                    if (pressed_button.id === $('#next-leg').id) {
+                        console.log("Inside");
+                        win_leg_modal.hide();
+                        console.log(ret.next_player);
+                        next_leg(ret.next_player);
+                        return
+                    }
                     $('.player.active').find('.old-score').html(ret.old_score);
                     $('.player.active').find('.throw-score').html(ret.throw_score);
                     if ($('.player.active').hasClass('player1')) {
@@ -152,3 +159,27 @@ $(document).ready(function() {
     });
 
 });
+
+function next_leg(starting_player) {
+    if (starting_player === 1) {
+        $('.player2').removeClass('active');
+        $('.player1').addClass('active');
+    } else if (starting_player === 2){
+        $('.player1').removeClass('active');
+        $('.player2').addClass('active');
+    } else {
+        alert("received wrong argument when starting next leg")
+    }
+    $('.score').each(function() {
+        $(this).text($('.match-type').text().trim());
+    })
+    $('.suggestion').each(function() {
+        $(this).css('visibility', 'hidden');
+    })
+    $('.old-score').each(function() {
+        $(this).text('');
+    })
+    $('.throw-score').each(function() {
+        $(this).text('');
+    })
+}
