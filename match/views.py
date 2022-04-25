@@ -73,11 +73,17 @@ def delete_match(request, match_id):
     return redirect(reverse('match:create'))
 
 
+def is_even(ord):
+    return (ord % 2) == 0
+
+
 @require_http_methods(["POST"])
 def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
+    won = request.POST.get('won', False)
     if not player_id:
         return JsonResponse(json.dumps({'success': False, 'reason': 'No player provided'}))
+    winner_id = request.POST.get('winner_id', None)
     player = Player.objects.get(pk=player_id)
     throw1 = int(request.POST.get('throw1', 0))
     throw2 = int(request.POST.get('throw2', 0))
@@ -94,18 +100,33 @@ def save_turn(request, match_id):
         throw2=throw2,
         throw3=throw3,
     )
-    if player == match.player1:
-        old_score = match.score_player1
-        match.score_player1 -= throw_score
-    elif player == match.player2:
-        old_score = match.score_player2
-        match.score_player2 -= throw_score
+    if won:
+        leg.winner = player
+        leg.save()
+        new_ord = leg.ord + 1
+        Leg.objects.create(match=match, ord=new_ord)
+        throw_score = 0
+        old_score = 0
+        if is_even(new_ord):
+            next_player = match.player1
+        else:
+            next_player = match.player2
     else:
-        return JsonResponse(json.dumps({'success': False, 'reason': 'Player is not in match'}))
-    match.save()
+        if player == match.player1:
+            old_score = match.score_player1
+            match.score_player1 -= throw_score
+            next_player = match.player2
+        elif player == match.player2:
+            old_score = match.score_player2
+            match.score_player2 -= throw_score
+            next_player = match.player1
+        else:
+            return JsonResponse(json.dumps({'success': False, 'reason': 'Player is not in match'}))
+        match.save()
     return_data = {
         'success': True,
         'throw_score': throw_score,
-        'old_score': old_score
+        'old_score': old_score,
+        'next_player': next_player
     }
     return JsonResponse(json.dumps(return_data), safe=False)
