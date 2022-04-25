@@ -73,7 +73,6 @@ def delete_match(request, match_id):
     return redirect(reverse('match:create'))
 
 
-# pylint: disable=too-many-locals
 @require_http_methods(["POST"])
 def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
