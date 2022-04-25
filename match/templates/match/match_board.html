@@ -28,7 +28,7 @@
     <div class="col best-of">
         Best of {{ match.best_of }}
         <br/>
-        <span id="out-type">{{ match.get_out_display }}</span>
+        <span id="out-type" data-value="{{ match.out }}">{{ match.get_out_display }}</span>
     </div>
 </div>
 {% endblock %}
