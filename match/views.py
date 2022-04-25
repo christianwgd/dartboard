@@ -101,6 +101,8 @@ def save_turn(request, match_id):
         throw_score = 0
         old_score = 0
         next_player = (ordinal % 2) + 1
+        match.score_player1 = int(match.typus)
+        match.score_player2 = int(match.typus)
     else:
         if player == match.player1:
             old_score = match.score_player1
@@ -112,11 +114,12 @@ def save_turn(request, match_id):
             next_player = 1
         else:
             return JsonResponse(json.dumps({'success': False, 'reason': 'Player is not in match'}))
-        match.save()
+    match.save()
     return_data = {
         'success': True,
         'throw_score': throw_score,
         'old_score': old_score,
         'next_player': next_player
     }
+    print(return_data)
     return JsonResponse(json.dumps(return_data), safe=False)
