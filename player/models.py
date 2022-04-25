@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib import auth
-from django.dispatch import receiver
 from django.utils.translation import gettext as _
 
 
