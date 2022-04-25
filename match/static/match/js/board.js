@@ -133,8 +133,7 @@ $(document).ready(function() {
                 let ret = JSON.parse(data);
                 resetThrows();
                 if (ret.success) {
-                    if (pressed_button.id === $('#next-leg').id) {
-                        console.log("Inside");
+                    if (pressed_button.attr('id') === 'next-leg') {
                         win_leg_modal.hide();
                         console.log(ret.next_player);
                         next_leg(ret.next_player);
