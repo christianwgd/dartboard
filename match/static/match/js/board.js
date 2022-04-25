@@ -75,7 +75,14 @@ $(document).ready(function() {
             let check_score = score - (val * mult);
             // 1 or below 0 is busted
             // 0 -> Check if out according to game outage
-            if (check_score < 0 || check_score == 1)  {
+            if (check_score === 0) {
+                let double_out = $('.match-type').text() === "Double Out";
+                let player_name = $('.player.active').find('.player-name').text().trim();
+                if (!double_out || mult === 2) {
+                    $('.player.active').find('.score').text(check_score);
+                    alert(`${player_name} has won the leg.`);
+                }
+            } else if (check_score < 0 || check_score === 1)  {
                 $score_el.addClass('animate__animated animate__backOutDown');
                 setTimeout(function () {
                     $score_el.removeClass('animate__animated animate__backOutDown');
