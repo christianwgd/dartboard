@@ -62,6 +62,7 @@ function update_checkout_way() {
 
 
 $(document).ready(function() {
+    var win_leg_modal = new bootstrap.Modal($('#leg-win-modal'));
     let thrown_darts = [];
     $('.'+set_active).addClass('active');
     update_checkout_way();
@@ -79,7 +80,8 @@ $(document).ready(function() {
             if (check_score === 0 && (!double_out || mult === 2)) {
                 let player_name = $('.player.active').find('.player-name').text().trim();
                 $('.player.active').find('.score').text(check_score);
-                alert(`${player_name} has won the leg.`);
+                $('#winner').text(player_name);
+                win_leg_modal.show();
             } else if (check_score <= 1)  {
                 $score_el.addClass('animate__animated animate__backOutDown');
                 setTimeout(function () {
