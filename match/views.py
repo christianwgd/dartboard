@@ -80,7 +80,7 @@ def save_turn(request, match_id):
     if not player_id:
         return JsonResponse(json.dumps({'success': False, 'reason': 'No player provided'}))
     player = Player.objects.get(pk=player_id)
-    throws = [int(request.POST.get(f'throw{i}', 0)) for i in range(3)]
+    throws = [int(request.POST.get(f'throw{i}', 0)) for i in range(1, 4)]
     throw_score = sum(throws)
     match = Match.objects.get(pk=match_id)
     leg = match.legs.last()
