@@ -2,7 +2,6 @@ from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView
 from bootstrap_modal_forms.utils import is_ajax
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import auth
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import UpdateView, ListView, CreateView
