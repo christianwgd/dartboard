@@ -1,6 +1,9 @@
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView
+from bootstrap_modal_forms.utils import is_ajax
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import auth
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import UpdateView, ListView, CreateView
 
@@ -83,10 +86,13 @@ class LeagueCreateView(LoginRequiredMixin, BSModalCreateView):
         return reverse('player:league-list')
 
     def form_valid(self, form):
-        league = form.save(commit=False)
-        league.save()
-        league.managers.add(self.request.user.player)
-        return super().form_valid(form)
+        if not is_ajax(self.request.META):
+            league = form.save(commit=False)
+            league.save()
+            league.managers.add(self.request.user.player)
+        else:
+            pass
+        return redirect(self.get_success_url())
 
 
 class PlayerAddToLeagueView(LoginRequiredMixin, BSModalUpdateView):
