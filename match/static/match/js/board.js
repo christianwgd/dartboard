@@ -94,6 +94,7 @@ $(document).ready(function() {
                 $('.player.active').find('.score').text(score);
                 $('.player.active').find(`#dart-${thrown_darts.length}`).text(val * mult);
             }
+            update_checkout_way();
         }
     });
 
@@ -107,6 +108,7 @@ $(document).ready(function() {
             let score = parseInt($('.player.active').find('.score').text());
             score = score + undo_score;
             $('.player.active').find('.score').text(score);
+            update_checkout_way();
         }
     });
 
