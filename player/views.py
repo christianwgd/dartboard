@@ -1,6 +1,8 @@
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import auth
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.views.generic import UpdateView, ListView, CreateView
 
@@ -84,9 +86,14 @@ class LeagueCreateView(LoginRequiredMixin, BSModalCreateView):
 
     def form_valid(self, form):
         league = form.save(commit=False)
-        league.save()
-        league.managers.add(self.request.user.player)
+        league.first_manager = self.request.user.player
         return super().form_valid(form)
+
+
+@receiver(post_save, sender=League)
+def set_league_manager(sender, instance, **kwargs):
+    user = instance.first_manager
+    instance.managers.add(user)
 
 
 class PlayerAddToLeagueView(LoginRequiredMixin, BSModalUpdateView):
