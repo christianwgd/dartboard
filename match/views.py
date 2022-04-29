@@ -59,9 +59,9 @@ class MatchBoardView(LoginRequiredMixin, DetailView):
             pass
         active_player = (leg.ord % 2)
         if active_player == 0:
-            ctx['active'] = 'player1'
-        else:
             ctx['active'] = 'player2'
+        else:
+            ctx['active'] = 'player1'
         return ctx
 
 
@@ -100,7 +100,7 @@ def save_turn(request, match_id):
         Leg.objects.create(match=match, ord=new_ord)
         throw_score = 0
         old_score = 0
-        next_player = (new_ord % 2) + 1
+        next_player = (leg.ord % 2) + 1
         match.score_player1 = int(match.typus)
         match.score_player2 = int(match.typus)
     else:
