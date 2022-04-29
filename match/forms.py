@@ -20,7 +20,6 @@ class MatchForm(models.ModelForm):
         player1 = cleaned_data.get('player1')
         player2 = cleaned_data.get('player2')
         if player1 == player2:
-            raise ValidationError(
-                _('Player 1 cannot be the same as player 2')
-            )
+            msg = _('Player 2 cannot be the same as player 1')
+            self.add_error('player2', msg)
         return cleaned_data

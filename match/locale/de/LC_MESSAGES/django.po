@@ -22,8 +22,8 @@ msgid "Match"
 msgstr "Spiel"
 
 #: match/forms.py:24
-msgid "Player 1 cannot be the same as player 2"
-msgstr "Spieler 1 und Spieler 2 dürfen nicht gleich sein"
+msgid "Player 2 cannot be the same as player 1"
+msgstr "Spieler 2 und Spieler 1 dürfen nicht gleich sein"
 
 #: match/models.py:9
 msgid "301"
