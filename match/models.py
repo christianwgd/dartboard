@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import formats
+from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from player.models import Player, League
@@ -27,8 +28,11 @@ class Match(models.Model):
         ordering = ['timestamp']
 
     def __str__(self):
-        tmstmp = formats.date_format(self.timestamp, 'SHORT_DATETIME_FORMAT')
-        return f'{self.typus}: {self.player1} - {self.player2} ({tmstmp})'
+        tm_stmp = formats.date_format(
+            timezone.localtime(self.timestamp),
+            'SHORT_DATETIME_FORMAT'
+        )
+        return f'{self.typus}: {self.player1} - {self.player2} ({tm_stmp})'
 
     typus = models.CharField(
         verbose_name=_('Type'), max_length=3,
