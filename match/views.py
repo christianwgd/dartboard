@@ -21,7 +21,7 @@ class MatchCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['unfinished'] = Match.objects.filter(
-            Q(player1=self.request.user.player) | Q(player2=self.request.user.player),
+            league__in=self.request.user.player.leagues.all(),
             winner=None,
         )[:3]
         return ctx
@@ -75,6 +75,7 @@ def delete_match(request, match_id):
 def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
     won = request.POST.get('won', False)
+    print('Won:', won)
     if not player_id:
         return JsonResponse(
             {'success': False, 'reason': 'No player provided'},

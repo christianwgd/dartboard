@@ -6,7 +6,7 @@ from match.models import Match, Turn, Leg
 
 @admin.register(Match)
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ['timestamp', 'typus', 'player1', 'player2', 'winner']
+    list_display = ['timestamp', 'typus', 'league', 'player1', 'player2', 'winner']
     list_filter = ['typus']
     date_hierarchy = 'timestamp'
 
