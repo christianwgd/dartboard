@@ -8,33 +8,51 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Start new game</h5>
-        <p class="card-text">Create a new match in your desired game format.</p>
-        <a href="{% url 'match:create' %}" class="btn btn-success">Play!</a>
-      </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% trans 'Start new game' %}
+                    </h5>
+                    <p class="card-text">
+                        {% trans 'Create a new match in your desired game format.' %}
+                    </p>
+                    <a href="{% url 'match:create' %}" class="btn btn-success">
+                        {% trans 'Play!' %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% trans 'User settings' %}
+                    </h5>
+                    <p class="card-text">
+                        {% trans 'Edit user nickname, email and other attributes.' %}
+                    </p>
+                    <a href="{% url 'player:update' %}" class="btn btn-primary">
+                        {% trans 'Edit user' %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% trans 'League Settings' %}
+                    </h5>
+                    <p class="card-text">
+                        {% trans 'Manage Leagues and their players.' %}
+                    </p>
+                    <a href="{% url 'player:league-list' %}" class="btn btn-primary">
+                        {% trans 'Edit leagues' %}
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">User settings</h5>
-        <p class="card-text">Edit user nickname, email and other attributes.</p>
-        <a href="{% url 'player:update' %}" class="btn btn-primary">Edit user</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">League Settings</h5>
-        <p class="card-text">Manage Leagues and their players.</p>
-        <a href="{% url 'player:league-list' %}" class="btn btn-primary">Edit leagues</a>
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock %}
