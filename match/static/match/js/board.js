@@ -30,9 +30,8 @@ const animateCSS = (node, animation, prefix = 'animate__') =>
 
 function update_checkout_way() {
     let remaining = parseInt($('.player.active').find('.score').text());
-    $.ajax({
-        url: `http://wgdsrv.fritz.box:5017/checkout/${remaining}`,
-        type: "GET",
+    $.get({
+        url: `/match/checkout/${remaining}/`,
         crossDomain: true,
         contentType: "application/json",
         success: function (response) {
@@ -123,7 +122,7 @@ $(document).ready(function() {
         let match_id = $('#match_id').text();
         let player_id = $('.player.active div div div div').attr('id');
         $.post({
-            url: "/match/save_turn/"+match_id+"/",
+            url: `/match/save_turn/${match_id}/`,
             data: {
                 'csrfmiddlewaretoken': csrftoken,
                 'player': player_id,

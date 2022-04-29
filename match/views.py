@@ -1,3 +1,5 @@
+import requests
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import redirect
@@ -125,3 +127,14 @@ def save_turn(request, match_id):
         'next_player': next_player
     }
     return JsonResponse(return_data, safe=False)
+
+
+@require_http_methods(["GET"])
+def get_checkout(request, remaining):
+    checkout_url = getattr(settings, 'CHECKOUT_URL', 'http://wgdsrv.fritz.box:5017/checkout/')
+    resp = requests.get(
+        f'{checkout_url}{remaining}'
+    )
+    if resp.status_code == 200:
+        return JsonResponse(resp.json(), safe=False)
+    return JsonResponse({'success': False, 'reason': resp.status_code})
