@@ -62,7 +62,7 @@ function update_checkout_way() {
 
 
 $(document).ready(function() {
-    var win_leg_modal = new bootstrap.Modal($('#leg-win-modal'));
+    let win_leg_modal = new bootstrap.Modal($('#leg-win-modal'));
     let thrown_darts = [];
     $('.'+set_active).addClass('active');
     update_checkout_way();
@@ -130,19 +130,19 @@ $(document).ready(function() {
                 'throw1': thrown_darts[0],
                 'throw2': thrown_darts[1],
                 'throw3': thrown_darts[2],
+                'won': pressed_button.attr('id') === 'next-leg',
             },
             success: function(data) {
-                let ret = JSON.parse(data);
                 resetThrows();
-                if (ret.success) {
+                if (data.success) {
                     if (pressed_button.attr('id') === 'next-leg') {
                         win_leg_modal.hide();
-                        console.log(ret.next_player);
-                        next_leg(ret.next_player);
+                        console.log(data.next_player);
+                        next_leg(data.next_player);
                         return
                     }
-                    $('.player.active').find('.old-score').html(ret.old_score);
-                    $('.player.active').find('.throw-score').html(ret.throw_score);
+                    $('.player.active').find('.old-score').html(data.old_score);
+                    $('.player.active').find('.throw-score').html(data.throw_score);
                     if ($('.player.active').hasClass('player1')) {
                         $('.player1').removeClass('active');
                         $('.player2').addClass('active');
@@ -151,7 +151,7 @@ $(document).ready(function() {
                         $('.player1').addClass('active');
                     }
                 } else {
-                    alert(ret.reason);
+                    alert(data.reason);
                 }
                 update_checkout_way();
              },

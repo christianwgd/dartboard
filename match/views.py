@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -49,20 +48,18 @@ class MatchBoardView(LoginRequiredMixin, DetailView):
             ctx['p1_latest_score'] = p1_turn.throw1 + p1_turn.throw2 + p1_turn.throw3
             ctx['p1_old_score'] = self.object.score_player1 + ctx['p1_latest_score']
         except Turn.DoesNotExist:
-            p1_turn = None
+            pass
         try:
             p2_turn = leg.turns.filter(player=self.object.player2).latest('ord')
             ctx['p2_latest_score'] = p2_turn.throw1 + p2_turn.throw2 + p2_turn.throw3
             ctx['p2_old_score'] = self.object.score_player2 + ctx['p2_latest_score']
         except Turn.DoesNotExist:
-            p2_turn = None
-        if p1_turn and p2_turn:
-            if p1_turn.ord < p2_turn.ord:
-                ctx['active'] = 'player1'
-            else:
-                ctx['active'] = 'player2'
-        else:
+            pass
+        active_player = (leg.ord % 2)
+        if active_player == 0:
             ctx['active'] = 'player1'
+        else:
+            ctx['active'] = 'player2'
         return ctx
 
 
@@ -74,8 +71,7 @@ def delete_match(request, match_id):
 @require_http_methods(["POST"])
 def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
-    won = request.POST.get('won', False)
-    print('Won:', won)
+    won = request.POST.get('won', 'false') == 'true'
     if not player_id:
         return JsonResponse(
             {'success': False, 'reason': 'No player provided'},
@@ -102,7 +98,7 @@ def save_turn(request, match_id):
         Leg.objects.create(match=match, ord=new_ord)
         throw_score = 0
         old_score = 0
-        next_player = (ordinal % 2) + 1
+        next_player = (new_ord % 2) + 1
         match.score_player1 = int(match.typus)
         match.score_player2 = int(match.typus)
     else:
@@ -119,6 +115,8 @@ def save_turn(request, match_id):
                 {'success': False, 'reason': 'Player is not in match'},
                 safe=False
             )
+    match.score_player1 = max(match.score_player1, 0)
+    match.score_player2 = max(match.score_player2, 0)
     match.save()
     return_data = {
         'success': True,
