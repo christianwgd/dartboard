@@ -86,7 +86,7 @@ class Leg(models.Model):
 
     match = models.ForeignKey(
         Match, on_delete=models.CASCADE,
-        related_name='legs', verbose_name=_('match')
+        related_name='legs', verbose_name=_('Match')
     )
     ord = models.PositiveSmallIntegerField(default=1, verbose_name=_('No.'))
     winner = models.ForeignKey(

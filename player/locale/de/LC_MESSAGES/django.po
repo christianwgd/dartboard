@@ -1,0 +1,122 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-29 23:27+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: player/admin.py:19
+msgid "Player name"
+msgstr ""
+
+#: player/admin.py:26
+msgid "Image"
+msgstr ""
+
+#: player/apps.py:8 player/models.py:11 player/templates/auth/user_form.html:10
+#: player/templates/player/player_form.html:10
+msgid "Player"
+msgstr ""
+
+#: player/forms.py:14
+msgid "Email"
+msgstr ""
+
+#: player/forms.py:16
+msgid ""
+"Dartboard supports Gravatar, if you register your email at <a href=\"https://"
+"de.gravatar.com/\" target=\"_blank\">gravatar.com</a>"
+msgstr ""
+
+#: player/forms.py:21
+msgid "first name"
+msgstr ""
+
+#: player/forms.py:24
+msgid "last name"
+msgstr ""
+
+#: player/forms.py:35 player/models.py:23
+msgid "Nickname"
+msgstr ""
+
+#: player/models.py:12 player/models.py:41
+msgid "Players"
+msgstr ""
+
+#: player/models.py:20
+msgid "User"
+msgstr ""
+
+#: player/models.py:29
+msgid "League"
+msgstr ""
+
+#: player/models.py:30 player/templates/player/league_list.html:38
+#: player/templates/player/player_form.html:41
+msgid "Leagues"
+msgstr ""
+
+#: player/models.py:39
+msgid "Name"
+msgstr ""
+
+#: player/models.py:45
+msgid "Manager"
+msgstr ""
+
+#: player/templates/player/league_add_player.html:7
+msgid "Manage players for league"
+msgstr ""
+
+#: player/templates/player/league_form.html:10
+msgid "New league"
+msgstr ""
+
+#: player/templates/player/league_list.html:62
+msgid "No player in this league"
+msgstr ""
+
+#: player/templates/player/league_list.html:67
+msgid "Add player"
+msgstr ""
+
+#: player/templates/player/league_list.html:71
+msgid "Manage players"
+msgstr ""
+
+#: player/templates/player/league_list.html:84
+msgid "Add league"
+msgstr ""
+
+#: player/templates/player/player_form.html:18
+msgid "Save"
+msgstr ""
+
+#: player/templates/player/player_form.html:21
+msgid "Cancel"
+msgstr ""
+
+#: player/templates/player/player_form.html:26
+msgid "Logout"
+msgstr ""
+
+#: player/templates/player/player_form.html:30
+msgid "Change password"
+msgstr ""
+
+#: player/templates/player/player_form.html:47
+msgid "Player is not in any league"
+msgstr ""
