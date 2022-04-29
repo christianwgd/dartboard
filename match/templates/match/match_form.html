@@ -7,6 +7,44 @@
 <link rel="stylesheet" type="text/css" href="{% static "match/css/match.css" %}" />
 {% endblock %}
 
+{% block bootstrap5_extra_script %}
+{{ block.super }}
+<script>
+function add_selection(field, players) {
+    for (let player of players) {
+        field.append($("<option></option>").attr("value", player.value).text(player.text))
+    }
+}
+
+$(document).ready(function() {
+
+    let league_id = $('#id_league').val();
+    if (league_id) {
+        $.get({
+            url: `/player/get_players_for_league/${league_id}/`,
+            success: function (players) {
+                add_selection($('#id_player1'), players);
+                add_selection($('#id_player2'), players);
+            }
+        });
+    }
+
+    $('#id_league').change(function() {
+        let league_id = $(this).val();
+        $.get({
+            url: `/player/get_players_for_league/${league_id}/`,
+            success: function (players) {
+                add_selection($('#id_player1'), players);
+                add_selection($('#id_player2'), players);
+            }
+        });
+
+    });
+
+});
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="row mt-3">
     <div class="col-md-6 offset-md-3 col-sm-12">
@@ -31,6 +69,7 @@
         <h4>{% trans 'Start new match' %}</h4>
         <form role="form" class="form-horizontal" method="post" novalidate>
             {% csrf_token %}
+            {% bootstrap_form_errors form %}
             {% bootstrap_field form.league %}
             <div class="row">
                 <div class="col-4">

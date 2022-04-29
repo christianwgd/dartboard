@@ -1,5 +1,3 @@
-import json
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import JsonResponse
@@ -78,7 +76,10 @@ def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
     won = request.POST.get('won', False)
     if not player_id:
-        return JsonResponse(json.dumps({'success': False, 'reason': 'No player provided'}))
+        return JsonResponse(
+            {'success': False, 'reason': 'No player provided'},
+            safe=False
+        )
     player = Player.objects.get(pk=player_id)
     throws = [int(request.POST.get(f'throw{i}', 0)) for i in range(1, 4)]
     throw_score = sum(throws)
@@ -113,7 +114,10 @@ def save_turn(request, match_id):
             match.score_player2 -= throw_score
             next_player = 1
         else:
-            return JsonResponse(json.dumps({'success': False, 'reason': 'Player is not in match'}))
+            return JsonResponse(
+                {'success': False, 'reason': 'Player is not in match'},
+                safe=False
+            )
     match.save()
     return_data = {
         'success': True,
@@ -121,4 +125,4 @@ def save_turn(request, match_id):
         'old_score': old_score,
         'next_player': next_player
     }
-    return JsonResponse(json.dumps(return_data), safe=False)
+    return JsonResponse(return_data, safe=False)

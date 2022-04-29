@@ -2,8 +2,10 @@ from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView
 from bootstrap_modal_forms.utils import is_ajax
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import auth
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.views.decorators.http import require_http_methods
 from django.views.generic import UpdateView, ListView, CreateView
 
 from player.forms import PlayerForm, UserForm, LeagueForm, PlayerSelectForm
@@ -101,3 +103,12 @@ class PlayerAddToLeagueView(LoginRequiredMixin, BSModalUpdateView):
 
     def get_success_url(self):
         return reverse('player:league-list')
+
+
+@require_http_methods(["GET"])
+def get_players_for_league(request, league_id):
+    players = League.objects.get(id=league_id).players.all()
+    json_data = []
+    for player in players:
+        json_data.append({'value': player.id, 'text': player.__str__()})
+    return JsonResponse(json_data, safe=False)

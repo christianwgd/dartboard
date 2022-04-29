@@ -11,5 +11,9 @@ urlpatterns = [
     path('league-list/', views.LeagueListView.as_view(), name='league-list'),
     path('league-create/', views.LeagueCreateView.as_view(), name='league-create'),
     path('add_to_league/<int:pk>/', views.PlayerAddToLeagueView.as_view(), name='add-to-league'),
-
+    path(
+        'get_players_for_league/<int:league_id>/',
+        views.get_players_for_league,
+        name='get-players-for-league'
+    )
 ]

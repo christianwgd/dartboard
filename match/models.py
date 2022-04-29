@@ -16,6 +16,7 @@ OUT_CHOICES = (
     ('DO', _('Double Out')),
 )
 
+
 class Match(models.Model):
     """
     A darts match
