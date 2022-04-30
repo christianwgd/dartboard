@@ -31,12 +31,15 @@ class MatchTest(TestCase):
                 user=user
             )
             self.league.players.add(player)
+        self.league.players.add(player)
         self.league.managers.add(Player.objects.first())
         self.match = Match.objects.create(
             player1=Player.objects.first(),
             player2=Player.objects.last(),
             league=self.league,
-            score_player1=475,
+            score_player1=301,
+            score_player2=301,
+            typus='301'
         )
         self.leg = Leg.objects.create(
             match=self.match
@@ -157,19 +160,25 @@ class MatchTest(TestCase):
         self.assertEqual(response.context['multipliers'], [1, 2, 3])
         self.assertEqual(response.context['fields'], range(1, 21))
         self.assertEqual(response.context['p1_latest_score'], 26)
-        self.assertEqual(response.context['p1_old_score'], 501)
+        self.assertEqual(response.context['p1_old_score'], 327)
         self.assertEqual(response.context['active'], 'player1')
 
     def test_match_delete_view_no_auth(self):
-        url = reverse('match:delete', kwargs={'pk': self.match.id})
+        url = reverse('match:delete', kwargs={'match_id': self.match.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, f"{reverse('login')}?next={url}")
 
     def test_match_delete_view(self):
+        match = Match.objects.create(
+            player1=Player.objects.first(),
+            player2=Player.objects.last(),
+            league=self.league,
+            score_player1=475,
+        )
         user = User.objects.first()
         self.client.force_login(user)
-        match_id = self.match.id
+        match_id = match.id
         url = reverse('match:delete', kwargs={'match_id': match_id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
@@ -198,4 +207,119 @@ class MatchTest(TestCase):
             '       {"field": 13, "region": "Double"}'
             '   ]'
             '}'
+        )
+
+    def test_save_turn_view_no_auth(self):
+        url = reverse('match:save_turn', kwargs={'match_id': self.match.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f"{reverse('login')}?next={url}")
+
+    def test_save_turn_view_no_player(self):
+        user = User.objects.first()
+        self.client.force_login(user)
+        url = reverse('match:save_turn', kwargs={'match_id': self.match.id})
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(
+            response.content,
+            {"success": False, "reason": "No player provided"}
+        )
+
+    def test_save_turn_view_player_not_exists(self):
+        user = User.objects.first()
+        self.client.force_login(user)
+        url = reverse('match:save_turn', kwargs={'match_id': self.match.id})
+        response = self.client.post(
+            url,
+            'player=9',
+            content_type="application/x-www-form-urlencoded"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(
+            response.content,
+            {"success": False, "reason": "Player does not exist"}
+        )
+
+    def test_save_turn_view_player_not_in_match(self):
+        user = User.objects.create(
+            username=self.fake.user_name(),
+            first_name=self.fake.first_name(),
+            last_name=self.fake.last_name(),
+            email=self.fake.email()
+        )
+        player_not_in_match = Player.objects.create(
+            user=user
+        )
+        user = User.objects.first()
+        self.client.force_login(user)
+        url = reverse('match:save_turn', kwargs={'match_id': self.match.id})
+        response = self.client.post(
+            url,
+            f'player={player_not_in_match.id}',
+            content_type="application/x-www-form-urlencoded"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(
+            response.content,
+            {"success": False, "reason": "Player is not in match"}
+        )
+
+    def test_save_turn_view_success(self):
+        user = User.objects.first()
+        self.client.force_login(user)
+        old_score = self.match.score_player1
+        url = reverse('match:save_turn', kwargs={'match_id': self.match.id})
+        response = self.client.post(
+            url,
+            f'player={self.match.player2.id}&throw1={1}&throw2={5}&throw3={20}&won=false',
+            content_type="application/x-www-form-urlencoded"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.match.refresh_from_db()
+        self.assertEqual(self.match.score_player2, old_score-26)
+        new_turn = Turn.objects.latest('ord')
+        self.assertEqual(new_turn.leg, self.turn.leg)
+        self.assertEqual(new_turn.player, self.match.player2)
+        self.assertEqual(new_turn.ord, self.turn.ord + 1)
+        self.assertEqual(new_turn.throw1, 1)
+        self.assertEqual(new_turn.throw2, 5)
+        self.assertEqual(new_turn.throw3, 20)
+        self.assertJSONEqual(
+            response.content,
+            {
+                "next_player": 1, "old_score": old_score,
+                "success": True, "throw_score": 26
+            }
+        )
+
+    def test_save_turn_view_won(self):
+        #  pylint: disable=fixme
+        # TODO: add some turns for both players to end the leg...
+        user = User.objects.first()
+        self.client.force_login(user)
+        url = reverse('match:save_turn', kwargs={'match_id': self.match.id})
+        response = self.client.post(
+            url,
+            f'player={self.match.player1.id}&throw1={5}&throw2={20}&throw3={20}&won=true',
+            content_type="application/x-www-form-urlencoded"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.match.refresh_from_db()
+        self.assertEqual(self.match.score_player1, 301)
+        self.leg.refresh_from_db()
+        self.assertEqual(self.leg.winner, self.match.player1)
+        new_turn = Turn.objects.latest('ord')
+        self.assertEqual(new_turn.leg, self.turn.leg)
+        self.assertEqual(new_turn.player, self.match.player1)
+        self.assertEqual(new_turn.ord, self.turn.ord + 1)
+        self.assertEqual(new_turn.throw1, 5)
+        self.assertEqual(new_turn.throw2, 20)
+        self.assertEqual(new_turn.throw3, 20)
+        self.assertJSONEqual(
+            response.content,
+            {
+                "next_player": 2, "old_score": 0,
+                "success": True, "throw_score": 0
+            }
         )

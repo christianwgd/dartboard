@@ -72,6 +72,7 @@ def delete_match(request, match_id):
     return redirect(reverse('match:create'))
 
 
+@login_required
 @require_http_methods(["POST"])
 def save_turn(request, match_id):
     player_id = request.POST.get('player', None)
@@ -81,7 +82,13 @@ def save_turn(request, match_id):
             {'success': False, 'reason': 'No player provided'},
             safe=False
         )
-    player = Player.objects.get(pk=player_id)
+    try:
+        player = Player.objects.get(pk=player_id)
+    except Player.DoesNotExist:
+        return JsonResponse(
+            {'success': False, 'reason': 'Player does not exist'},
+            safe=False
+        )
     throws = [int(request.POST.get(f'throw{i}', 0)) for i in range(1, 4)]
     throw_score = sum(throws)
     match = Match.objects.get(pk=match_id)
