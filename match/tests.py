@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib import auth
+from django.urls import reverse
 from django.utils import formats, timezone
 from django.utils.translation import gettext as _
 from faker import Faker
@@ -17,7 +18,7 @@ class MatchTest(TestCase):
     def setUp(self):
         self.fake = Faker('de_DE')
         self.league = League.objects.create(
-            name=self.fake.word()
+            name=self.fake.word(),
         )
         for _ in range(3):
             user = User.objects.create(
@@ -30,6 +31,7 @@ class MatchTest(TestCase):
                 user=user
             )
             self.league.players.add(player)
+        self.league.managers.add(Player.objects.first())
         self.match = Match.objects.create(
             player1=Player.objects.first(),
             player2=Player.objects.last(),
@@ -107,8 +109,30 @@ class MatchTest(TestCase):
         self.assertEqual(len(form.errors), 6)
 
     # View Tests
-    def test_match_create_view(self):
-        pass
+    def test_match_create_view_no_auth(self):
+        url = reverse('match:create')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f"{reverse('login')}?next={url}")
 
     def test_board_view(self):
-        pass
+        user = User.objects.first()
+        self.client.force_login(user)
+        url = reverse('match:create')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['unfinished']), 1)
+        player1 = Player.objects.first()
+        player2 = Player.objects.last()
+        form_data = {
+            'league': self.league.id,
+            'best_of': 3,
+            'typus': '501',
+            'out': 'DO',
+            'player1': player1.id,
+            'player2': player2.id
+        }
+        response = self.client.post(url, form_data)
+        self.assertEqual(response.status_code, 302)
+        new_match = Match.objects.latest('timestamp')
+        self.assertEqual(response.url, reverse('match:board', kwargs={'pk': new_match.id}))
