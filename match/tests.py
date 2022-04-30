@@ -1,8 +1,10 @@
 from django.test import TestCase
 from django.contrib import auth
 from django.utils import formats, timezone
+from django.utils.translation import gettext as _
 from faker import Faker
 
+from match.forms import MatchForm
 from match.models import Match, Leg, Turn
 from player.models import League, Player
 
@@ -65,8 +67,44 @@ class MatchTest(TestCase):
         )
 
     # Form Tests
-    def test_match_form(self):
-        pass
+    def test_match_form_valid(self):
+        player1 = Player.objects.first()
+        player2 = Player.objects.last()
+        form_data = {
+            'league': self.league,
+            'best_of': 3,
+            'typus': '501',
+            'out': 'DO',
+            'player1': player1,
+            'player2': player2
+        }
+        form = MatchForm(form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_match_form_invalid_same_players(self):
+        player1 = Player.objects.first()
+        player2 = player1
+        form_data = {
+            'league': self.league,
+            'best_of': 3,
+            'typus': '501',
+            'out': 'DO',
+            'player1': player1,
+            'player2': player2
+        }
+        form = MatchForm(form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 1)
+        self.assertIn(
+            _('Player 2 cannot be the same as player 1'),
+            form.errors['player2']
+        )
+
+    def test_match_form_invalid_empty(self):
+        form_data = {}
+        form = MatchForm(form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 6)
 
     # View Tests
     def test_match_create_view(self):
