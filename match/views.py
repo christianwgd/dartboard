@@ -1,5 +1,6 @@
 import requests
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import redirect
@@ -65,6 +66,7 @@ class MatchBoardView(LoginRequiredMixin, DetailView):
         return ctx
 
 
+@login_required
 def delete_match(request, match_id):
     Match.objects.get(pk=match_id).delete()
     return redirect(reverse('match:create'))
@@ -129,6 +131,7 @@ def save_turn(request, match_id):
     return JsonResponse(return_data, safe=False)
 
 
+@login_required()
 @require_http_methods(["GET"])
 def get_checkout(request, remaining):
     checkout_url = getattr(settings, 'CHECKOUT_URL', 'http://wgdsrv.fritz.box:5017/checkout/')
