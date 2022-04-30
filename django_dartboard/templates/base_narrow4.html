@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n django_bootstrap5 static %}
+
+{% block content %}
+<div class="row mt-3">
+    <div class="col-md-4 offset-md-4 col-sm-12">
+        <h2>{% block page_title %}{% endblock %}</h2>
+        {% block narrow %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

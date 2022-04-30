@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_narrow4.html" %}
 {% load i18n django_bootstrap5 static %}
 
 {% block bootstrap5_extra_head %}
@@ -8,29 +8,23 @@
 
 {% block page_title %}{% trans 'Login' %}{% endblock %}
 
-{% block content %}
-<div id="content-main">
-
-    {% if user.is_authenticated %}
-    <p class="errornote">
-    {% blocktrans trimmed %}
-        You are authenticated as {{ username }}, but are not authorized to
-        access this page. Would you like to login to a different account?
-    {% endblocktrans %}
-    </p>
-    {% endif %}
-
-    <div class="col-md-4 offset-md-4 col-sm-12">
-        <form role="form" action="{{ app_path }}" method="post" id="login-form" novalidate>
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <button type="submit" class="btn btn-primary">
-                <i class="far fa-check"></i>
-            </button>
-            <button type="reset" class="btn btn-secondary">
-                <i class="far fa-trash"></i>
-            </button>
-        </form>
-    </div>
-</div>
+{% block narrow %}
+{% if user.is_authenticated %}
+<p class="errornote">
+{% blocktrans trimmed %}
+    You are authenticated as {{ username }}, but are not authorized to
+    access this page. Would you like to login to a different account?
+{% endblocktrans %}
+</p>
+{% endif %}
+<form role="form" action="{{ app_path }}" method="post" id="login-form" novalidate>
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-primary">
+        <i class="far fa-check"></i>
+    </button>
+    <button type="reset" class="btn btn-secondary">
+        <i class="far fa-trash"></i>
+    </button>
+    </form>
 {% endblock %}

@@ -35,8 +35,6 @@ $(document).ready(function() {
 </script>
 {% endblock %}
 
-{% block page_title %}<h2 class="text-center mt-3">{% trans 'Leagues' %}</h2>{% endblock %}
-
 {% block content %}
 <!-- Modal -->
 <div class="modal fade" role="dialog" id="modal">
@@ -45,35 +43,39 @@ $(document).ready(function() {
     </div>
 </div>
 
+<h2 class="text-center mt-3">{% trans 'Leagues' %}</h2>
+
 <div class="row mt-3 row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
 {% for league in league_list %}
     <div class="col">
-        <div class="card">
+        <div class="card h-100">
             <div class="card-header">
                 {{ league }}
             </div>
-            <ul class="list-group list-group-flush">
-                {% for player in league.players.all %}
-                <li class="list-group-item">
-                    {{ player }}
-                </li>
-                {% empty %}
-                <li class="list-group-item">
-                    {% trans 'No player in this league' %}
-                </li>
-                {% endfor %}
-                <li class="list-group-item" style="padding: 5px;">
-                    <a href="{% url 'player:create' league.id %}" class="btn btn-sm btn-success"
-                       title="{% trans 'Add player' %}">
-                        <i class="far fa-plus"></i>
-                    </a>
-                    <button class="btn btn-sm btn-secondary add-player"
-                            title="{% trans 'Manage players' %}"
-                            data-url="{% url 'player:add-to-league' league.id %}">
-                        <i class="far fa-users"></i>
-                    </button>
-                </li>
-            </ul>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for player in league.players.all %}
+                    <li class="list-group-item">
+                        {{ player }}
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item">
+                        {% trans 'No player in this league' %}
+                    </li>
+                    {% endfor %}
+                    <li class="list-group-item btn-bottom" style="padding: 5px;">
+                        <a href="{% url 'player:create' league.id %}" class="btn btn-sm btn-success"
+                           title="{% trans 'Add player' %}">
+                            <i class="far fa-plus"></i>
+                        </a>
+                        <button class="btn btn-sm btn-secondary add-player"
+                                title="{% trans 'Manage players' %}"
+                                data-url="{% url 'player:add-to-league' league.id %}">
+                            <i class="far fa-users"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 {% endfor %}

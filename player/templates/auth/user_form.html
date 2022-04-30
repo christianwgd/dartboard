@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_narrow6.html" %}
 {% load static l10n i18n django_bootstrap5 %}
 
 {% block bootstrap5_extra_head %}
@@ -9,19 +9,15 @@
 
 {% block page_title %}<h2 class="text-center mt-3">{% trans 'Player' %}</h2>{% endblock %}
 
-{% block content %}
-<div class="row">
-    <div class="col-md-6 offset-md-3 col-sm-12">
-        <form role="form" class="form-horizontal" method="post" novalidate>
-            {% csrf_token %}
-            {% bootstrap_form form layout='floating' %}
-            <button class="btn btn-primary">
-                <i class="far fa-check"></i>
-            </button>
-            <a href="{% url 'player:league-list' %}" class="btn btn-secondary">
-                <i class="far fa-times"></i>
-            </a>
-        </form>
-    </div>
-</div>
+{% block narrow %}
+    <form role="form" class="form-horizontal" method="post" novalidate>
+        {% csrf_token %}
+        {% bootstrap_form form layout='floating' %}
+        <button class="btn btn-primary">
+            <i class="far fa-check"></i>
+        </button>
+        <a href="{% url 'player:league-list' %}" class="btn btn-secondary">
+            <i class="far fa-times"></i>
+        </a>
+    </form>
 {% endblock %}

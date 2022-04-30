@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_narrow6.html" %}
 {% load static l10n i18n django_bootstrap5 %}
 
 {% block bootstrap5_extra_head %}
@@ -7,11 +7,11 @@
 <link rel="stylesheet" type="text/css" href="{% static "player/css/player.css" %}" />
 {% endblock %}
 
-{% block page_title %}<h2 class="text-center mt-3">{% trans 'Player' %}</h2>{% endblock %}
+{% block page_title %}<h2 class="text-center mt-3">{% trans 'User settings' %}</h2>{% endblock %}
 
-{% block content %}
+{% block narrow %}
 <div class="row mt-3">
-    <div class="col-md-6 offset-md-3 col-sm-12">
+    <div class="col-12">
         <form role="form" class="form-horizontal" method="post" novalidate>
             {% csrf_token %}
             {% bootstrap_form form layout='floating' %}
@@ -35,7 +35,7 @@
     </div>
 </div>
 <div class="row mt-3">
-    <div class="col-md-6 offset-md-3 col-sm-12">
+    <div class="col-12">
         <div class="card mt-2">
             <div class="card-header">
                 {% trans 'Leagues' %}
