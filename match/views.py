@@ -1,3 +1,5 @@
+import sys
+
 import requests
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -123,6 +125,7 @@ def save_turn(request, match_id):
             next_player = 1
         else:
             return JsonResponse(
+
                 {'success': False, 'reason': 'Player is not in match'},
                 safe=False
             )
@@ -149,4 +152,16 @@ def get_checkout(request, remaining):
         if resp.status_code == 200:
             return JsonResponse(resp.json(), safe=False)
         return JsonResponse({'success': False, 'reason': resp.status_code})
+    if 'test' in sys.argv:
+        # Test, mock the service response
+        return JsonResponse(
+            {
+                "darts": [
+                    {"field": 19, "region": "Triple"},
+                    {"field": 12, "region": "Triple"},
+                    {"field": 13, "region": "Double"}
+                ]
+            },
+            safe=False
+        )
     return JsonResponse({'success': False, 'reason': 'CHECKOUT_URL not configured'})
