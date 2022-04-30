@@ -141,10 +141,12 @@ def save_turn(request, match_id):
 @login_required()
 @require_http_methods(["GET"])
 def get_checkout(request, remaining):
-    checkout_url = getattr(settings, 'CHECKOUT_URL', 'http://wgdsrv.fritz.box:5017/checkout/')
-    resp = requests.get(
-        f'{checkout_url}{remaining}'
-    )
-    if resp.status_code == 200:
-        return JsonResponse(resp.json(), safe=False)
-    return JsonResponse({'success': False, 'reason': resp.status_code})
+    checkout_url = getattr(settings, 'CHECKOUT_URL', None)
+    if checkout_url is not None:
+        resp = requests.get(
+            f'{checkout_url}{remaining}'
+        )
+        if resp.status_code == 200:
+            return JsonResponse(resp.json(), safe=False)
+        return JsonResponse({'success': False, 'reason': resp.status_code})
+    return JsonResponse({'success': False, 'reason': 'CHECKOUT_URL not configured'})
