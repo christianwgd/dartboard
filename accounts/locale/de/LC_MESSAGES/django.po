@@ -43,10 +43,8 @@ msgstr ""
 
 #: accounts/templates/accounts/password_change_done.html:4
 #: accounts/templates/accounts/password_change_form.html:4
-#, fuzzy
-#| msgid "Your password was changed."
 msgid "Password change"
-msgstr "Ihr Passwort wurde geändert."
+msgstr "Passwort ändern"
 
 #: accounts/templates/accounts/password_change_done.html:10
 msgid "Your password was changed."

@@ -39,7 +39,7 @@ msgstr "Erstelle ein neues Spiel in dem von Dir gewünschten Spielformat."
 
 #: django_dartboard/templates/index.html:22
 msgid "Play!"
-msgstr ""
+msgstr "Spielen!"
 
 #: django_dartboard/templates/index.html:31
 msgid "User settings"
