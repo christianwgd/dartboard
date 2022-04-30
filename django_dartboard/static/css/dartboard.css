@@ -22,3 +22,16 @@
 .logo-large {
     width: 70vw;
 }
+
+.card-header > h5 {
+    margin: .5rem;
+}
+
+.card-body {
+    padding-bottom: 4rem;
+}
+
+.btn-bottom {
+    position: absolute;
+    bottom: 1rem;
+}

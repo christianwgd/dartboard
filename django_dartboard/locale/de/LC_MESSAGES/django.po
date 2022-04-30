@@ -26,8 +26,8 @@ msgid "Home"
 msgstr "Start"
 
 #: django_dartboard/templates/index.html:6
-msgid "Welcome "
-msgstr "Willkommmen "
+msgid "Welcome"
+msgstr "Willkommmen"
 
 #: django_dartboard/templates/index.html:16
 msgid "Start new game"
