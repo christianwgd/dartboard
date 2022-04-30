@@ -1,4 +1,4 @@
-from django.forms import models, ValidationError
+from django.forms import models
 from django.utils.translation import gettext as _
 
 from match.models import Match
