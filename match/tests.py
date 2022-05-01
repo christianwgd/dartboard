@@ -31,13 +31,12 @@ class MatchTest(TestCase):
                 user=user
             )
             self.league.players.add(player)
-        self.league.players.add(player)
         self.league.managers.add(Player.objects.first())
         self.match = Match.objects.create(
             player1=Player.objects.first(),
             player2=Player.objects.last(),
             league=self.league,
-            score_player1=301,
+            score_player1=275,
             score_player2=301,
             typus='301'
         )
@@ -160,7 +159,7 @@ class MatchTest(TestCase):
         self.assertEqual(response.context['multipliers'], [1, 2, 3])
         self.assertEqual(response.context['fields'], range(1, 21))
         self.assertEqual(response.context['p1_latest_score'], 26)
-        self.assertEqual(response.context['p1_old_score'], 327)
+        self.assertEqual(response.context['p1_old_score'], 301)
         self.assertEqual(response.context['active'], 'player1')
 
     def test_match_delete_view_no_auth(self):
@@ -268,7 +267,7 @@ class MatchTest(TestCase):
     def test_save_turn_view_success(self):
         user = User.objects.first()
         self.client.force_login(user)
-        old_score = self.match.score_player1
+        old_score = self.match.score_player2
         url = reverse('match:save_turn', kwargs={'match_id': self.match.id})
         response = self.client.post(
             url,
@@ -294,28 +293,60 @@ class MatchTest(TestCase):
         )
 
     def test_save_turn_view_won(self):
-        #  pylint: disable=fixme
-        # TODO: add some turns for both players to end the leg...
         user = User.objects.first()
         self.client.force_login(user)
+
+        self.assertEqual(self.match.score_player1, 275)
+
         url = reverse('match:save_turn', kwargs={'match_id': self.match.id})
+
         response = self.client.post(
             url,
-            f'player={self.match.player1.id}&throw1={5}&throw2={20}&throw3={20}&won=true',
+            f'player={self.match.player2.id}&throw1={1}&throw2={60}&throw3={60}&won=false',
+            content_type="application/x-www-form-urlencoded"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.match.refresh_from_db()
+        self.assertEqual(self.match.score_player2, 180)
+
+        response = self.client.post(
+            url,
+            f'player={self.match.player1.id}&throw1={25}&throw2={50}&throw3={50}&won=false',
+            content_type="application/x-www-form-urlencoded"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.match.refresh_from_db()
+        self.assertEqual(self.match.score_player1, 150)
+
+        response = self.client.post(
+            url,
+            f'player={self.match.player2.id}&throw1={60}&throw2={40}&throw3={20}&won=false',
+            content_type="application/x-www-form-urlencoded"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.match.refresh_from_db()
+        self.assertEqual(self.match.score_player2, 60)
+
+        response = self.client.post(
+            url,
+            f'player={self.match.player1.id}&throw1={50}&throw2={50}&throw3={50}&won=true',
             content_type="application/x-www-form-urlencoded"
         )
         self.assertEqual(response.status_code, 200)
         self.match.refresh_from_db()
         self.assertEqual(self.match.score_player1, 301)
+        self.assertEqual(self.match.score_player2, 301)
+
         self.leg.refresh_from_db()
         self.assertEqual(self.leg.winner, self.match.player1)
         new_turn = Turn.objects.latest('ord')
         self.assertEqual(new_turn.leg, self.turn.leg)
         self.assertEqual(new_turn.player, self.match.player1)
-        self.assertEqual(new_turn.ord, self.turn.ord + 1)
-        self.assertEqual(new_turn.throw1, 5)
-        self.assertEqual(new_turn.throw2, 20)
-        self.assertEqual(new_turn.throw3, 20)
+        self.assertEqual(self.leg.turns.count(), 5)
+        self.assertEqual(new_turn.ord, 5)
+        self.assertEqual(new_turn.throw1, 50)
+        self.assertEqual(new_turn.throw2, 50)
+        self.assertEqual(new_turn.throw3, 50)
         self.assertJSONEqual(
             response.content,
             {
@@ -323,3 +354,6 @@ class MatchTest(TestCase):
                 "success": True, "throw_score": 0
             }
         )
+
+    def test_save_turn_view_bust(self):
+        pass
