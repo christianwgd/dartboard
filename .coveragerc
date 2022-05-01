@@ -2,3 +2,4 @@
 omit =
     dartboard/wsgi.py
     dartboard/asgi.py
+    dartboard/settings.py
