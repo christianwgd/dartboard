@@ -29,7 +29,15 @@ $(document).ready(function() {
             modalID: "#modal",
             errorClass: '.is-invalid'
         });
-  });
+    });
+
+    $(".update-league").each(function () {
+        $(this).modalForm({
+            formURL: $(this).data('url'),
+            modalID: "#modal",
+            errorClass: '.is-invalid'
+        });
+    });
 
 });
 </script>
@@ -63,7 +71,7 @@ $(document).ready(function() {
                         {% trans 'No player in this league' %}
                     </li>
                     {% endfor %}
-                    <li class="list-group-item btn-bottom" style="padding: 5px;">
+                    <div class="btn-bottom" style="padding: 5px;width: 100%;">
                         <a href="{% url 'player:create' league.id %}" class="btn btn-sm btn-success"
                            title="{% trans 'Add player' %}">
                             <i class="far fa-plus"></i>
@@ -73,7 +81,13 @@ $(document).ready(function() {
                                 data-url="{% url 'player:add-to-league' league.id %}">
                             <i class="far fa-users"></i>
                         </button>
-                    </li>
+                        <button class="btn btn-sm btn-primary update-league float-end"
+                                title="{% trans 'Update league' %}"
+                                data-url="{% url 'player:league-update' league.id %}"
+                                style="margin-right: 2rem;">
+                            <i class="far fa-edit"></i>
+                        </button>
+                    </div>
                 </ul>
             </div>
         </div>

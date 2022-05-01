@@ -96,6 +96,14 @@ class LeagueCreateView(LoginRequiredMixin, BSModalCreateView):
         return redirect(self.get_success_url())
 
 
+class LeagueUpdateView(LoginRequiredMixin, BSModalUpdateView):
+    model = League
+    form_class = LeagueForm
+
+    def get_success_url(self):
+        return reverse('player:league-list')
+
+
 class PlayerAddToLeagueView(LoginRequiredMixin, BSModalUpdateView):
     model = League
     form_class = PlayerSelectForm
