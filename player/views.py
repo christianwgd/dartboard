@@ -54,6 +54,9 @@ class PlayerUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         player = form.save(commit=False)
         changed = False
+        if 'username' in form.changed_data:
+            player.user.username = form.cleaned_data['username']
+            changed = True
         if 'email' in form.changed_data:
             player.user.email = form.cleaned_data['email']
             changed = True

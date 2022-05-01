@@ -10,6 +10,9 @@ User = auth.get_user_model()
 
 class PlayerForm(forms.models.ModelForm):
 
+    username = forms.CharField(
+        label=_('username'), required=False, max_length=150
+    )
     email = forms.EmailField(
         label=_('Email'), required=False,
         help_text=_(
@@ -18,15 +21,15 @@ class PlayerForm(forms.models.ModelForm):
         )
     )
     first_name = forms.CharField(
-        label=_('first name'), required=False,
+        label=_('first name'), required=False, max_length=150
     )
     last_name = forms.CharField(
-        label=_('last name'), required=False,
+        label=_('last name'), required=False, max_length=150
     )
 
     class Meta:
         model = Player
-        fields = ['first_name', 'last_name', 'nickname', 'email']
+        fields = ['username', 'first_name', 'last_name', 'nickname', 'email']
 
 
 class UserForm(forms.models.ModelForm):

@@ -162,6 +162,21 @@ class MatchTest(TestCase):
         self.assertEqual(response.context['p1_old_score'], 301)
         self.assertEqual(response.context['active'], 'player1')
 
+    def test_match_summary_view_no_auth(self):
+        url = reverse('match:summary', kwargs={'pk': self.match.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f"{reverse('login')}?next={url}")
+
+    def test_match_summary_view(self):
+        user = User.objects.first()
+        self.client.force_login(user)
+        url = reverse('match:summary', kwargs={'pk': self.match.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['match'], self.match)
+        # Check staticstics...
+
     def test_match_delete_view_no_auth(self):
         url = reverse('match:delete', kwargs={'match_id': self.match.id})
         response = self.client.get(url)

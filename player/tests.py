@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from faker import Faker
 
-from player.forms import PlayerForm, UserForm, LeagueForm
+from player.forms import PlayerForm, UserForm, LeagueForm, PlayerSelectForm
 from player.models import League, Player
 
 
@@ -18,14 +18,14 @@ class PlayerTest(TestCase):
         self.league = League.objects.create(
             name=self.fake.word()
         )
-        user = User.objects.create(
+        self.user = User.objects.create(
             username=self.fake.user_name(),
             first_name=self.fake.first_name(),
             last_name=self.fake.last_name(),
             email=self.fake.email()
         )
         self.player = Player.objects.create(
-            user=user
+            user=self.user,
         )
         self.league.players.add(self.player)
 
@@ -43,6 +43,7 @@ class PlayerTest(TestCase):
     # Form Tests
     def test_player_form_valid(self):
         form_data = {
+            'username': self.fake.user_name(),
             'first_name': self.fake.first_name(),
             'last_name': self.fake.last_name(),
             'email': self.fake.email(),
@@ -92,16 +93,31 @@ class PlayerTest(TestCase):
         self.assertEqual(len(form.errors), 1)
         self.assertEqual(form.errors['name'], [_('This field is required.')])
 
+    def test_player_select_form_valid(self):
+        player = Player.objects.first()
+        form_data = {
+            'players': [player.id],
+        }
+        form = PlayerSelectForm(form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_player_select_form_invalid(self):
+        form_data = {
+            'players': [5],
+        }
+        form = PlayerSelectForm(form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 1)
+
     # Views test
-    def test_league_create_view(self):
+    def test_user_create_view_no_auth(self):
         url = reverse('player:create', kwargs={'league_id': self.league.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, f"{reverse('login')}?next={url}")
 
-    def test_match_create_view(self):
-        user = User.objects.first()
-        self.client.force_login(user)
+    def test_user_create_view(self):
+        self.client.force_login(self.user)
         url = reverse('player:create', kwargs={'league_id': self.league.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -120,3 +136,31 @@ class PlayerTest(TestCase):
         user = User.objects.get(username=username)
         self.assertTrue(hasattr(user, 'player'))
         self.assertEqual(user.player.nickname, nickname)
+
+    def test_player_update_view_no_auth(self):
+        url = reverse('player:update')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f"{reverse('login')}?next={url}")
+
+    def test_player_update_view(self):
+        self.client.force_login(self.user)
+        url = reverse('player:update')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        username = self.fake.user_name()
+        nickname = self.fake.word()
+        form_data = {
+            'username': username,
+            'first_name': self.fake.first_name(),
+            'last_name': self.fake.last_name(),
+            'email': self.fake.email(),
+            'nickname': nickname,
+        }
+        response = self.client.post(url, form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('home'))
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.username, username)
+        self.assertTrue(hasattr(self.user, 'player'))
+        self.assertEqual(self.user.player.nickname, nickname)
