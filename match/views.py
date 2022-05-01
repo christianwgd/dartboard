@@ -68,6 +68,11 @@ class MatchBoardView(LoginRequiredMixin, DetailView):
         return ctx
 
 
+class MatchSummaryView(LoginRequiredMixin, DetailView):
+    model = Match
+    template_name = 'match/match_summary.html'
+
+
 @login_required
 def delete_match(request, match_id):
     Match.objects.get(pk=match_id).delete()
