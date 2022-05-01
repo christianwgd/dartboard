@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static l10n i18n django_bootstrap5 board_tags %}
+{% load static l10n i18n django_bootstrap5 board_tags avatar_tags %}
 
 {% block bootstrap5_extra_head %}
 {{ block.super }}
@@ -41,6 +41,7 @@
             <div class="col-6">
                 <div class="row">
                     <div id="{{ match.player1.id }}" class="col-12 d-flex justify-content-start player-name">
+                        <img id="avatar-player-1" class="small-img-avatar float-end" src="{% avatar_url match.player1.user 200 %}" alt="{{ match.player1.user }}">
                         {{ match.player1 }}
                     </div>
                 </div>
@@ -89,6 +90,7 @@
                 <div class="row">
                     <div id="{{ match.player2.id }}" class="col-12 justify-content-end player-name">
                         {{ match.player2 }}
+                        <img id="avatar-player-2" class="small-img-avatar float-end" src="{% avatar_url match.player2.user 200 %}" alt="{{ match.player2.user }}">
                     </div>
                 </div>
                 <div class="row justify-content-end throws throws-right">

@@ -10,6 +10,22 @@
     background-color: white;
 }
 
+.small-img-avatar {
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    background-color: white;
+}
+
+#avatar-player-1 {
+    margin-right: 10px;
+}
+
+#avatar-player-2 {
+    margin-left: 10px;
+}
+
 .page_title {
     text-align: center;
 }
