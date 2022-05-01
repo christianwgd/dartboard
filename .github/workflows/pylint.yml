@@ -1,4 +1,4 @@
-name: Django CI Python format
+name: Linting
 
 on:
   push:
