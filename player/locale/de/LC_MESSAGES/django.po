@@ -39,7 +39,7 @@ msgid ""
 "Dartboard supports Gravatar, if you register your email at <a href=\"https://"
 "de.gravatar.com/\" target=\"_blank\">gravatar.com</a>"
 msgstr ""
-"Abi80 unterstützt Gravatar, wenn Du Deine Emailadresse bei <a href=\"https://"
+"Dartboard unterstützt Gravatar, wenn Du Deine Emailadresse bei <a href=\"https://"
 "de.gravatar.com/\" target=\"_blank\">gravatar.com</a> registrierst."
 
 #: player/forms.py:21
