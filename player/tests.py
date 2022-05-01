@@ -1,7 +1,9 @@
 from django.test import TestCase
 from django.contrib import auth
+from django.utils.translation import gettext as _
 from faker import Faker
 
+from player.forms import PlayerForm
 from player.models import League, Player
 
 
@@ -38,5 +40,21 @@ class PlayerTest(TestCase):
         self.assertEqual(self.league.__str__(), self.league.name)
 
     # Form Tests
-    def test_player_form(self):
-        pass
+    def test_player_form_valid(self):
+        form_data = {
+            'first_name': self.fake.first_name(),
+            'last_name': self.fake.last_name(),
+            'email': self.fake.email(),
+            'nickname': self.fake.word(),
+        }
+        form = PlayerForm(form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_player_form_invalid(self):
+        form_data = {
+            'email': self.fake.word(),
+        }
+        form = PlayerForm(form_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors), 1)
+        self.assertEqual(form.errors['email'], [_('Enter a valid email address.')])
