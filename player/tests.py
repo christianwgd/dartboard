@@ -28,6 +28,7 @@ class PlayerTest(TestCase):
             user=self.user,
         )
         self.league.players.add(self.player)
+        self.league.managers.add(self.player)
 
     # Model Tests
     def test_player_str(self):
@@ -164,3 +165,85 @@ class PlayerTest(TestCase):
         self.assertEqual(self.user.username, username)
         self.assertTrue(hasattr(self.user, 'player'))
         self.assertEqual(self.user.player.nickname, nickname)
+
+    def test_league_list_view_no_auth(self):
+        url = reverse('player:league-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f"{reverse('login')}?next={url}")
+
+    def test_league_list_view(self):
+        self.client.force_login(self.user)
+        url = reverse('player:league-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['league_list']), 1)
+
+    def test_league_create_view_no_auth(self):
+        url = reverse('player:league-create')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f"{reverse('login')}?next={url}")
+
+    def test_league_create_view(self):
+        self.client.force_login(self.user)
+        url = reverse('player:league-create')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        name = self.fake.word()
+        response = self.client.post(url, {'name': name})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('player:league-list'))
+        self.assertEqual(League.objects.count(), 2)
+        new_league = League.objects.get(name=name)
+        self.assertEqual(new_league.name, name)
+        self.assertEqual(new_league.players.count(), 0)
+        self.assertEqual(new_league.managers.count(), 1)
+        self.assertEqual(new_league.managers.first(), self.user.player)
+
+    def test_league_update_view_no_auth(self):
+        url = reverse('player:league-update', kwargs={'pk': self.league.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f"{reverse('login')}?next={url}")
+
+    def test_league_update_view(self):
+        self.client.force_login(self.user)
+        url = reverse('player:league-update', kwargs={'pk': self.league.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        name = self.fake.word()
+        response = self.client.post(url, {'name': name})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('player:league-list'))
+        self.league.refresh_from_db()
+        self.assertEqual(self.league.name, name)
+
+    def test_player_add_to_league_view_no_auth(self):
+        url = reverse('player:add-to-league', kwargs={'pk': self.league.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, f"{reverse('login')}?next={url}")
+
+    def test_player_add_to_league_view(self):
+        new_user = User.objects.create(
+            username=self.fake.user_name(),
+            first_name=self.fake.first_name(),
+            last_name=self.fake.last_name(),
+            email=self.fake.email()
+        )
+        new_player = Player.objects.create(
+            user=new_user,
+        )
+        self.assertEqual(self.league.players.count(), 1)
+        self.client.force_login(self.user)
+        url = reverse('player:add-to-league', kwargs={'pk': self.league.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        form_data = {
+            'players': [self.player.id, new_player.id],
+        }
+        response = self.client.post(url, form_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('player:league-list'))
+        self.assertEqual(self.league.players.count(), 2)
