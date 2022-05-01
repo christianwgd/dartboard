@@ -1,5 +1,6 @@
 [run]
 omit =
+    ./manage.py
     dartboard/wsgi.py
     dartboard/asgi.py
     dartboard/settings.py
