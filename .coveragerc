@@ -1,0 +1,3 @@
+omit =
+    dartboard/wsgi.py
+    dartboard/asgi.py
