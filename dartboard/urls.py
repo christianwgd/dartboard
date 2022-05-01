@@ -1,4 +1,4 @@
-"""django_dartboard URL Configuration
+"""dartboard URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -19,7 +19,7 @@ from django.utils.translation import gettext as _
 
 
 # Admin Site Config
-from django_dartboard import views
+from dartboard import views
 
 admin.sites.AdminSite.site_header = _('Dartboard administration')
 admin.sites.AdminSite.site_title = _('Dartboard administration')

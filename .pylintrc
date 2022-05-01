@@ -1,6 +1,6 @@
 [MASTER]
 load-plugins=pylint_django
-django-settings-module=django_dartboard.settings
+django-settings-module=dartboard.settings
 ignore-patterns=\d{4}_.*?.py
 
 [FORMAT]

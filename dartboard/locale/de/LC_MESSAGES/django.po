@@ -17,54 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: django_dartboard/templates/base.html:26
+#: dartboard/templates/base.html:26
 msgid "Dartboard"
 msgstr ""
 
-#: django_dartboard/templates/base.html:37
+#: dartboard/templates/base.html:37
 msgid "Home"
 msgstr "Start"
 
-#: django_dartboard/templates/index.html:6
+#: dartboard/templates/index.html:6
 msgid "Welcome"
 msgstr "Willkommmen"
 
-#: django_dartboard/templates/index.html:16
+#: dartboard/templates/index.html:16
 msgid "Start new game"
 msgstr "Neues Spiel starten"
 
-#: django_dartboard/templates/index.html:19
+#: dartboard/templates/index.html:19
 msgid "Create a new match in your desired game format."
 msgstr "Erstelle ein neues Spiel in dem von Dir gewünschten Spielformat."
 
-#: django_dartboard/templates/index.html:22
+#: dartboard/templates/index.html:22
 msgid "Play!"
 msgstr "Spielen!"
 
-#: django_dartboard/templates/index.html:31
+#: dartboard/templates/index.html:31
 msgid "User settings"
 msgstr "Benutzereinstellungen"
 
-#: django_dartboard/templates/index.html:34
+#: dartboard/templates/index.html:34
 msgid "Edit user nickname, email and other attributes."
 msgstr "Bearbeite Deinen Benutzernamen, E-Mail und andere Attribute."
 
-#: django_dartboard/templates/index.html:37
+#: dartboard/templates/index.html:37
 msgid "Edit user"
 msgstr "Benutzer bearbeiten"
 
-#: django_dartboard/templates/index.html:46
+#: dartboard/templates/index.html:46
 msgid "League Settings"
 msgstr "Liga Einstellungen"
 
-#: django_dartboard/templates/index.html:49
+#: dartboard/templates/index.html:49
 msgid "Manage Leagues and their players."
 msgstr "Verwalte Ligen und Spieler."
 
-#: django_dartboard/templates/index.html:52
+#: dartboard/templates/index.html:52
 msgid "Edit leagues"
 msgstr "Ligen bearbeiten"
 
-#: django_dartboard/urls.py:24 django_dartboard/urls.py:25
+#: dartboard/urls.py:24 dartboard/urls.py:25
 msgid "Dartboard administration"
 msgstr "Dartboard Verwaltung"
