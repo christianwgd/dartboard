@@ -78,8 +78,14 @@ class MatchSummaryView(LoginRequiredMixin, DetailView):
         turns = Turn.objects.filter(leg__in=legs)
         p1_turs = turns.filter(player_id=self.object.player1)
         p2_turs = turns.filter(player_id=self.object.player2)
-        ctx["player1_average"] = sum(turn.score() for turn in p1_turs) / len(p1_turs)
-        ctx["player2_average"] = sum(turn.score() for turn in p2_turs) / len(p2_turs)
+        if p1_turs:
+            ctx["player1_average"] = sum(turn.score() for turn in p1_turs) / len(p1_turs)
+        else:
+            ctx["player1_average"] = 0
+        if p2_turs:
+            ctx["player2_average"] = sum(turn.score() for turn in p2_turs) / len(p2_turs)
+        else:
+            ctx["player2_average"] = 0
         ctx["player1_legs"] = len(legs.filter(winner=self.object.player1))
         ctx["player2_legs"] = len(legs.filter(winner=self.object.player2))
         return ctx
