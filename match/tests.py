@@ -303,7 +303,7 @@ class MatchTest(TestCase):
             response.content,
             {
                 "next_player": 1, "old_score": old_score,
-                "success": True, "throw_score": 26
+                "success": True, "throw_score": 26, "match_finished": False,
             }
         )
 
@@ -366,7 +366,7 @@ class MatchTest(TestCase):
             response.content,
             {
                 "next_player": 2, "old_score": 0,
-                "success": True, "throw_score": 0
+                "success": True, "throw_score": 0, "match_finished": False,
             }
         )
 
