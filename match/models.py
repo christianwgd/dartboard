@@ -38,8 +38,8 @@ class Match(models.Model):
         verbose_name=_('Type'), max_length=3,
         choices=MATCH_TYPE_CHOICES, default='501'
     )
-    best_of = models.PositiveSmallIntegerField(
-        default=3, verbose_name=_('best of')
+    first_to = models.PositiveSmallIntegerField(
+        default=2, verbose_name=_('first to')
     )
     out = models.CharField(
         verbose_name=_('Out'), max_length=2,

@@ -80,7 +80,7 @@ class MatchTest(TestCase):
         player2 = Player.objects.last()
         form_data = {
             'league': self.league,
-            'best_of': 3,
+            'first_to': 3,
             'typus': '501',
             'out': 'DO',
             'player1': player1,
@@ -94,7 +94,7 @@ class MatchTest(TestCase):
         player2 = player1
         form_data = {
             'league': self.league,
-            'best_of': 3,
+            'first_to': 3,
             'typus': '501',
             'out': 'DO',
             'player1': player1,
@@ -132,7 +132,7 @@ class MatchTest(TestCase):
         player2 = Player.objects.last()
         form_data = {
             'league': self.league.id,
-            'best_of': 3,
+            'first_to': 3,
             'typus': '501',
             'out': 'DO',
             'player1': player1.id,

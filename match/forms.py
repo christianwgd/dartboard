@@ -8,7 +8,7 @@ class MatchForm(models.ModelForm):
 
     class Meta:
         model = Match
-        fields = ['league', 'best_of', 'typus', 'out', 'player1', 'player2']
+        fields = ['league', 'first_to', 'typus', 'out', 'player1', 'player2']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
