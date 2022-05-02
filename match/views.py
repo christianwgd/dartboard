@@ -130,6 +130,7 @@ def save_turn(request, match_id):
     if won:
         leg.winner = player
         leg.save()
+        match_finished = max(len(match.legs.filter(winner_id=match.player1.id)), len(match.legs.filter(winner_id=match.player1.id))) == match.best_of
         new_ord = leg.ord + 1
         Leg.objects.create(match=match, ord=new_ord)
         throw_score = 0
@@ -138,6 +139,7 @@ def save_turn(request, match_id):
         match.score_player1 = int(match.typus)
         match.score_player2 = int(match.typus)
     else:
+        match_finished = False
         if player == match.player1:
             old_score = match.score_player1
             match.score_player1 -= throw_score
@@ -159,7 +161,8 @@ def save_turn(request, match_id):
         'success': True,
         'throw_score': throw_score,
         'old_score': old_score,
-        'next_player': next_player
+        'next_player': next_player,
+        'match_finished': match_finished,
     }
     return JsonResponse(return_data, safe=False)
 

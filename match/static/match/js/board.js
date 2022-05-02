@@ -135,9 +135,12 @@ $(document).ready(function() {
                 resetThrows();
                 if (data.success) {
                     if (pressed_button.attr('id') === 'next-leg') {
-                        win_leg_modal.hide();
-                        console.log(data.next_player);
-                        next_leg(data.next_player);
+                        if (data.match_finished) {
+                            location.replace(`../../summary/${match_id}`);
+                        } else {
+                            win_leg_modal.hide();
+                            next_leg(data.next_player);
+                        }
                         return
                     }
                     $('.player.active').find('.old-score').html(data.old_score);
