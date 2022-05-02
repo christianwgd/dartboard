@@ -112,6 +112,7 @@ class Turn(models.Model):
     def __str__(self):
         return f'{self.leg} {self.player}'
 
+    @property
     def score(self):
         return self.throw1 + self.throw2 + self.throw3
 
