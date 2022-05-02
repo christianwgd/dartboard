@@ -130,7 +130,10 @@ def save_turn(request, match_id):
     if won:
         leg.winner = player
         leg.save()
-        match_finished = max(len(match.legs.filter(winner_id=match.player1.id)), len(match.legs.filter(winner_id=match.player1.id))) == match.best_of
+        match_finished = max(
+            len(match.legs.filter(winner_id=match.player1.id)),
+            len(match.legs.filter(winner_id=match.player1.id))
+        ) == match.best_of
         new_ord = leg.ord + 1
         Leg.objects.create(match=match, ord=new_ord)
         throw_score = 0
