@@ -72,6 +72,18 @@ class MatchSummaryView(LoginRequiredMixin, DetailView):
     model = Match
     template_name = 'match/match_summary.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        legs = Leg.objects.filter(match_id=self.object.id)
+        turns = Turn.objects.filter(leg__in=legs)
+        p1_turs = turns.filter(player_id=self.object.player1)
+        p2_turs = turns.filter(player_id=self.object.player2)
+        ctx["player1_average"] = sum(turn.score() for turn in p1_turs) / len(p1_turs)
+        ctx["player2_average"] = sum(turn.score() for turn in p2_turs) / len(p2_turs)
+        ctx["player1_legs"] = len(legs.filter(winner=self.object.player1))
+        ctx["player2_legs"] = len(legs.filter(winner=self.object.player2))
+        return ctx
+
 
 @login_required
 def delete_match(request, match_id):

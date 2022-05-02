@@ -112,6 +112,9 @@ class Turn(models.Model):
     def __str__(self):
         return f'{self.leg} {self.player}'
 
+    def score(self):
+        return self.throw1 + self.throw2 + self.throw3
+
     leg = models.ForeignKey(
         Leg, on_delete=models.CASCADE,
         verbose_name=_('Leg'), related_name='turns'
