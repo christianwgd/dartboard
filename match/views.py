@@ -134,6 +134,11 @@ def save_turn(request, match_id):
             len(match.legs.filter(winner_id=match.player1.id)),
             len(match.legs.filter(winner_id=match.player1.id))
         ) == match.best_of
+        if match_finished:
+            if len(match.legs.filter(winner_id=match.player1.id)) > len(match.legs.filter(winner_id=match.player2.id)):
+                match.winner = match.player1
+            else:
+                match.winner = match.player2
         new_ord = leg.ord + 1
         Leg.objects.create(match=match, ord=new_ord)
         throw_score = 0
