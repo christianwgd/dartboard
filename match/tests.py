@@ -312,6 +312,7 @@ class MatchTest(TestCase):
         self.client.force_login(user)
 
         self.assertEqual(self.match.score_player1, 275)
+        self.assertEqual(self.match.score_player2, 301)
 
         url = reverse('match:save_turn', kwargs={'match_id': self.match.id})
 
