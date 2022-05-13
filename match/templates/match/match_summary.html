@@ -43,4 +43,21 @@
         </tr>
     </tbody>
 </table>
+<div class="col">
+    <div class="card h-100">
+        <div class="card-header">
+            <h5 class="card-title">
+                {% trans 'Start new game' %}
+            </h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                {% trans 'Create a new match in your desired game format.' %}
+            </p>
+            <a href="{% url 'match:create' %}" class="btn btn-success btn-bottom">
+                {% trans 'Play!' %}
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}
