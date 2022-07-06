@@ -2,5 +2,5 @@ Django==4.0.6
 django-bootstrap5==21.3
 django-bootstrap-modal-forms==2.2.0
 git+https://github.com/christianwgd/django-avatar.git
-requests==2.27.1
+requests==2.28.1
 six==1.16.0
