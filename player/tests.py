@@ -32,14 +32,14 @@ class PlayerTest(TestCase):
 
     # Model Tests
     def test_player_str(self):
-        self.assertEqual(self.player.__str__(), self.player.user.username)
+        self.assertEqual(str(self.player), self.player.user.username)
         self.player.nickname = self.fake.word()
         self.player.save()
         self.player.refresh_from_db()
-        self.assertEqual(self.player.__str__(), self.player.nickname)
+        self.assertEqual(str(self.player), self.player.nickname)
 
     def test_league_str(self):
-        self.assertEqual(self.league.__str__(), self.league.name)
+        self.assertEqual(str(self.league), self.league.name)
 
     # Form Tests
     def test_player_form_valid(self):

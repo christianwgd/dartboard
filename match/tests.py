@@ -58,19 +58,19 @@ class MatchTest(TestCase):
             'SHORT_DATETIME_FORMAT'
         )
         self.assertEqual(
-            self.match.__str__(),
+            str(self.match),
             f'{self.match.typus}: {self.match.player1} - {self.match.player2} ({tmstmp})'
         )
 
     def test_leg_str(self):
         self.assertEqual(
-            self.leg.__str__(),
+            str(self.leg),
             f'{self.leg.match} Leg {self.leg.ord}'
         )
 
     def test_turn_str(self):
         self.assertEqual(
-            self.turn.__str__(),
+            str(self.turn),
             f'{self.turn.leg} {self.turn.player}'
         )
 

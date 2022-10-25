@@ -121,5 +121,5 @@ def get_players_for_league(request, league_id):
     players = League.objects.get(id=league_id).players.all()
     json_data = []
     for player in players:
-        json_data.append({'value': player.id, 'text': player.__str__()})
+        json_data.append({'value': player.id, 'text': str(player)})
     return JsonResponse(json_data, safe=False)
