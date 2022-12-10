@@ -44,7 +44,7 @@ default:
   # Only needed when using a docker container to run your tests in.
   # Check out: https://docs.gitlab.com/ee/ci/services/index.html
   services:
-    - mysql:8.0
+    - postgres:14.0
   #
   # This folder is cached between builds
   # http://docs.gitlab.com/ee/ci/yaml/README.html#cache
@@ -57,6 +57,7 @@ default:
     - apt -y install net-tools python3.8 python3-pip mysql-client libmysqlclient-dev
     - apt -y upgrade
     - pip3 install -r requirements.txt
+    - pip3 install -r test-requirements.txt
 
 
 migrations:
@@ -72,7 +73,7 @@ django-tests:
   stage: test
   script:
     # The MYSQL user only gets permissions for MYSQL_DB, so Django can't create a test database.
-    - echo "GRANT ALL on *.* to '${MYSQL_USER}';"| mysql -u root --password="${MYSQL_ROOT_PASSWORD}" -h mysql
+    # - echo "GRANT ALL on *.* to '${MYSQL_USER}';"| mysql -u root --password="${MYSQL_ROOT_PASSWORD}" -h mysql
     # use python3 explicitly. see https://wiki.ubuntu.com/Python/3
     - python3 manage.py test
 
