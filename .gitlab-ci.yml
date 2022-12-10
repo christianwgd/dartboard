@@ -45,10 +45,11 @@ default:
       - ~/.cache/pip/
   before_script:
     - export DEBIAN__FRONTEND=noninteractive
-    - export TZ=Europe/Berlin
+    - export TZ="Europe/Berlin"
     - apt -y update
     - apt -y install apt-utils
-    - apt -y install net-tools python3.10 python3-pip python3-dev tzdata
+    - apt -y install tzdata
+    - apt -y install net-tools python3.10 python3-pip python3-dev
     - apt -y upgrade
     - pip3 install -r requirements.txt
     - pip3 install -r test-requirements.txt
