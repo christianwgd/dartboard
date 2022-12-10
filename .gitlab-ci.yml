@@ -28,8 +28,6 @@
 
 variables:
   # DJANGO_CONFIG: "test"
-  DEBIAN__FRONTEND: "noninteractive"
-  TZ: "Europe/Berlin"
 
 default:
   image: ubuntu:22.04
@@ -46,6 +44,8 @@ default:
     paths:
       - ~/.cache/pip/
   before_script:
+    - export DEBIAN__FRONTEND=noninteractive
+    - export TZ=Europe/Berlin
     - apt -y update
     - apt -y install apt-utils
     - apt -y install net-tools python3.10 python3-pip python3-dev tzdata
@@ -57,20 +57,19 @@ default:
 migrations:
   stage: build
   script:
+    - find . -type f -name "*.py" | xargs pylint
     - python3 manage.py makemigrations
     - python3 manage.py migrate
     - python3 manage.py check
-
-python-codecheck:
-  stage: build
-  script:
-    - find . -type f -name "*.py" | xargs pylint
 
 django-tests:
   stage: test
   script:
     # use python3 explicitly. see https://wiki.ubuntu.com/Python/3
-    - python3 manage.py test
+    - pip3 install coverage
+    # - python3 manage.py test
+    - coverage run --source='.' manage.py test
+    - coverage html
 
 deploy:
   stage: deploy
