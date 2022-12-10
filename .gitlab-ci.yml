@@ -29,7 +29,7 @@
 variables:
   # DJANGO_CONFIG: "test"
   DEBIAN__FRONTEND=noninteractive
-  TZ="Europe/Berlin"
+  TZ=Europe\/Berlin
 
 default:
   image: ubuntu:22.04
