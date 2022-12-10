@@ -28,7 +28,8 @@
 
 variables:
   # DJANGO_CONFIG: "test"
-  DEBIAN_FRONTEND=noninteractive
+  DEBIAN__FRONTEND: "noninteractive"
+  TZ: "Europe/Berlin"
 
 default:
   image: ubuntu:22.04
@@ -36,8 +37,8 @@ default:
   # Pick zero or more services to be used on all builds.
   # Only needed when using a docker container to run your tests in.
   # Check out: https://docs.gitlab.com/ee/ci/services/index.html
-  services:
-    - postgres:14.0
+  #  services:
+  #    - postgres:14.0
   #
   # This folder is cached between builds
   # http://docs.gitlab.com/ee/ci/yaml/README.html#cache
@@ -45,11 +46,9 @@ default:
     paths:
       - ~/.cache/pip/
   before_script:
-    - export TZ=Europe/Berlin
     - apt -y update
     - apt -y install apt-utils
-    - apt -y install tzdata
-    - apt -y install net-tools python3.8 python3-pip python3-dev libpq-dev
+    - apt -y install net-tools python3.8 python3-pip python3-dev tzdata
     - apt -y upgrade
     - pip3 install -r requirements.txt
     - pip3 install -r test-requirements.txt
