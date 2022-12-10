@@ -28,6 +28,7 @@
 
 variables:
   # DJANGO_CONFIG: "test"
+  DEBIAN_FRONTEND=noninteractive
 
 default:
   image: ubuntu:22.04
@@ -44,7 +45,6 @@ default:
     paths:
       - ~/.cache/pip/
   before_script:
-    - export DEBIAN_FRONTEND=noninteractive
     - export TZ=Europe/Berlin
     - apt -y update
     - apt -y install apt-utils
