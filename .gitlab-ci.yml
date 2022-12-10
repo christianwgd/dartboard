@@ -62,7 +62,7 @@ migrations:
     - python3 manage.py check
 
 python-codecheck:
-  stage: codecheck
+  stage: build
   script:
     - find . -type f -name "*.py" | xargs pylint
 
