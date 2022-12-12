@@ -71,7 +71,7 @@ django-tests:
     - pip3 install coverage
     # - python3 manage.py test
     - coverage run --source='.' manage.py test
-    - pytest --cov --cov-report xml .
+    - coverage xml
     - curl -Os https://uploader.codecov.io/latest/linux/codecov
     - chmod +x codecov
     - ./codecov -t ${CODECOV_TOKEN}
