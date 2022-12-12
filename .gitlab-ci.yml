@@ -28,7 +28,6 @@
 
 variables:
   # DJANGO_CONFIG: "test"
-  CODECOV_TOKEN: "e2145022-3d1a-4b80-ad13-726d2421bbe5"
 
 default:
   image: ubuntu:22.04
@@ -72,10 +71,6 @@ django-tests:
     # - python3 manage.py test
     - coverage run --source='.' manage.py test
     - coverage xml
-    - curl -Os https://uploader.codecov.io/latest/linux/codecov
-    - chmod +x codecov
-    - ./codecov -t ${CODECOV_TOKEN}
-
 
 deploy:
   stage: deploy
