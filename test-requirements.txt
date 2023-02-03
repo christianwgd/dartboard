@@ -1,5 +1,5 @@
 django-extensions==3.2.1
-Faker==15.3.4
-pylint==2.14.5
+Faker==16.6.1
+pylint==2.16.1
 pylint-django==2.5.3
 
