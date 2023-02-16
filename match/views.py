@@ -60,7 +60,7 @@ class MatchBoardView(LoginRequiredMixin, DetailView):
             ctx['p2_old_score'] = self.object.score_player2 + ctx['p2_latest_score']
         except Turn.DoesNotExist:
             pass
-        active_player = (leg.ord % 2)
+        active_player = leg.ord % 2
         if active_player == 0:
             ctx['active'] = 'player2'
         else:
@@ -181,7 +181,8 @@ def get_checkout(request, remaining):
     checkout_url = getattr(settings, 'CHECKOUT_URL', None)
     if checkout_url is not None:
         resp = requests.get(
-            f'{checkout_url}{remaining}'
+            f'{checkout_url}{remaining}',
+            timeout=20
         )
         if resp.status_code == 200:
             return JsonResponse(resp.json(), safe=False)
