@@ -25,7 +25,7 @@ class IndexTest(TestCase):
 
     def test_index_unauthenticated(self):
         response = self.client.get(reverse('home'))
-        # Should be redirected to login
+        # Should be redirected to log in
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, f"{reverse('login')}?next=/")
 
