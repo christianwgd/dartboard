@@ -46,6 +46,9 @@
                     {% if request.user.email %}
                     <img class="img-avatar float-end" width="50"
                          src="{% avatar_url request.user 200 %}" alt="{{ request.user.player }}">
+                    {% else %}
+                    <img class="img-avatar float-end" width="50"
+                         src="{% static 'img/default_avatar.png' %}" alt="{{ request.user.player }}">
                     {% endif %}
                 </a>
             {% endif %}

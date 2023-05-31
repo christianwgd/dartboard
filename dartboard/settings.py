@@ -106,6 +106,7 @@ LOGIN_REDIRECT_URL = reverse_lazy('home')
 AVATAR_GRAVATAR_DEFAULT = 'identicon'
 AVATAR_CLEANUP_DELETED = True
 AVATAR_THUMB_FORMAT = "PNG"
+AVATAR_GRAVATAR_DEFAULT = '/static/img/default_avatar.png'
 
 ##################
 # LOCAL SETTINGS #
