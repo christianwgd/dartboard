@@ -1,4 +1,6 @@
-django-extensions==3.2.1
-Faker==18.9.0
-pylint==2.17.4
-pylint-django==2.5.3
+django-extensions==3.2.3
+Faker==19.2.0
+pytest==7.4.0
+pytest-cov==4.1.0
+pytest-django==4.5.2
+ruff==0.0.280

@@ -22,7 +22,7 @@ PROJECT_APP = os.path.basename(PROJECT_APP_PATH)
 
 # Settings for tests, override in production with localsettings!
 DEBUG = True
-SECRET_KEY = 'django-insecure-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+SECRET_KEY = 'django-insecure-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'  # noqa: S105
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -127,4 +127,4 @@ if os.path.exists(f):
     module = importlib.import_module(module_name)
     module.__file__ = f
     sys.modules[module_name] = module
-    exec(open(f, "rb").read())
+    exec(open(f, "rb").read())  # noqa: S102

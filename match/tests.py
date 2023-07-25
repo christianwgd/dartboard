@@ -20,7 +20,7 @@ class MatchTest(TestCase):
         self.league = League.objects.create(
             name=self.fake.word(),
         )
-        for _ in range(3):
+        for _i in range(3):
             user = User.objects.create(
                 username=self.fake.user_name(),
                 first_name=self.fake.first_name(),

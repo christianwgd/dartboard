@@ -25,10 +25,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r test-requirements.txt
+    - name: Run Ruff
+      run: ruff check --format=github .
     - name: Run Tests
-      run: |
-        python manage.py test
-        
+      run: pytest
+
   Coverage:
     runs-on: ubuntu-latest
 
