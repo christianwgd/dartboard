@@ -1,3 +1,4 @@
+import pytest
 from django.conf import settings
 from django.test import TestCase
 from django.contrib import auth
@@ -198,7 +199,7 @@ class MatchTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse('match:create'))
-        with self.assertRaises(Match.DoesNotExist):
+        with pytest.raises(Match.DoesNotExist):
             Match.objects.get(pk=match_id)
 
     def test_get_checkout_view_no_auth(self):
