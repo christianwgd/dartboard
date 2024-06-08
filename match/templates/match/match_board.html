@@ -3,17 +3,18 @@
 
 {% block bootstrap5_extra_head %}
 {{ block.super }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" type="text/css" href="{% static "match/css/match.css" %}" />
 {% endblock %}
 
 {% block bootstrap5_extra_script %}
 {{ block.super }}
+<script src="{% static 'js/htmx.min.js' %}"></script>
 <script>
     let csrftoken = '{{ csrf_token }}';
     let set_active = '{{ active }}';
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<script src="{% static 'match/js/board.js' %}"></script>
+{#<script src="{% static 'match/js/board.js' %}"></script>#}
 {% endblock %}
 
 {% block status_bar_content %}
@@ -73,7 +74,7 @@
                 </div>
             </div>
             <div class="col-6 d-flex justify-content-end">
-                <span id="id_score_pl1" class="score">
+                <span id="id_score_player1" class="score">
                     {{ match.score_player1 }}
                 </span>
             </div>
@@ -82,7 +83,7 @@
     <div class="col-6 col-xs-12 player player2">
         <div class="row justify-content-end">
             <div class="col-6 justify-content-end">
-                <span id="id_score_pl2" class="score">
+                <span id="id_score_player2" class="score">
                     {{ match.score_player2 }}
                 </span>
             </div>
@@ -130,7 +131,15 @@
         {% for field in fields %}
             {% if forloop.first %}<div class="row row-col-4">{% endif %}
             <div class="col field-container d-flex justify-content-center">
-                <div class="field" data-value="{{ field|reverse }}" data-multiplier="{{ mult }}">
+{#                <div class="field" data-value="{{ field|reverse }}" data-multiplier="{{ mult }}">#}
+{#                    {{ field|reverse }}#}
+{#                </div>#}
+                <div class="field" 
+                     hx-get="{% url 'match:dart' match.id active field|reverse %}"
+                     hx-trigger="click"
+                     hx-target="#id_score_{{ active }}"
+                     placeholder="Search..."
+                >
                     {{ field|reverse }}
                 </div>
             </div>

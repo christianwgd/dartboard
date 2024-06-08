@@ -4,7 +4,7 @@ import requests
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
@@ -200,3 +200,17 @@ def get_checkout(request, remaining):
             safe=False
         )
     return JsonResponse({'success': False, 'reason': 'CHECKOUT_URL not configured'})
+
+
+@login_required()
+@require_http_methods(["GET"])
+def dart(request, match_id, active, value):
+    print(match_id, active, value)
+    match = Match.objects.get(pk=match_id)
+    if active == 'player1':
+        print(match.score_player1)
+        match.score_player1 -= value
+    else:
+        match.score_player2 -= value
+    match.save()
+    return HttpResponse(match.score_player1, content_type='text/plain')

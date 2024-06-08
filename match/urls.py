@@ -12,4 +12,6 @@ urlpatterns = [
     path('delete/<int:match_id>/', views.delete_match, name='delete'),
     path('save_turn/<int:match_id>/', views.save_turn, name='save_turn'),
     path('checkout/<int:remaining>/', views.get_checkout, name='checkout'),
+
+    path('dart/<int:match_id>/<str:active>/<int:value>/', views.dart, name='dart'),
 ]
