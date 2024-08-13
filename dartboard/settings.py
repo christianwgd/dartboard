@@ -13,6 +13,7 @@ import os
 import sys
 from pathlib import Path
 
+from django.conf.global_settings import STORAGES
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.urls import reverse_lazy
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_unicorn',
     'accounts',
     'match',
     'player',
@@ -104,7 +106,7 @@ LOGIN_REDIRECT_URL = reverse_lazy('home')
 AVATAR_GRAVATAR_DEFAULT = 'identicon'
 AVATAR_CLEANUP_DELETED = True
 AVATAR_THUMB_FORMAT = "PNG"
-AVATAR_GRAVATAR_DEFAULT = '/static/img/default_avatar.png'
+DEFAULT_FILE_STORAGE = STORAGES
 
 ##################
 # LOCAL SETTINGS #

@@ -31,4 +31,5 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('player/', include('player.urls')),
     path('match/', include('match.urls')),
+    path("unicorn/", include("django_unicorn.urls")),
 ]
