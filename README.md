@@ -3,9 +3,9 @@
 <div align="center">
 
 [![Django CI run test](https://github.com/christianwgd/dartboard/actions/workflows/django-test.yml/badge.svg)](https://github.com/christianwgd/django_dartboard/actions/workflows/django-test.yml)
-[![codecov](https://codecov.io/gh/christianwgd/dartboard/branch/main/graph/badge.svg?token=O4MWGYV52K)](https://codecov.io/gh/christianwgd/dartboard)
+[![codecov](https://codecov.io/gh/christianwgd/dartboard/graph/badge.svg?token=O4MWGYV52K)](https://codecov.io/gh/christianwgd/dartboard)
   
-  </div>
+</div>
   
 
 # Dartboard
