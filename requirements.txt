@@ -1,6 +1,6 @@
-Django==5.2
+Django==5.2.4
 django-avatar==8.0.1
 django-bootstrap5==25.1
 django-bootstrap-modal-forms==3.0.5
-requests==2.32.3
+requests==2.32.4
 django-unicorn==0.62.0
