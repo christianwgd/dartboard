@@ -41,7 +41,7 @@ class PlayerUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         # pylint: disable=unused-variable
-        player, created = Player.objects.get_or_create(user=self.request.user)
+        player, _created = Player.objects.get_or_create(user=self.request.user)
         return player
 
     def get_initial(self):

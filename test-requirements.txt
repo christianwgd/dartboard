@@ -1,6 +1,6 @@
 django-extensions==4.1
-Faker==37.4.0
-pytest==8.4.1
-pytest-cov==6.2.1
+Faker==37.8.0
+pytest==8.4.2
+pytest-cov==7.0.0
 pytest-django==4.11.1
-ruff==0.12.1
+ruff==0.13.2
