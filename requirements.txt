@@ -1,4 +1,4 @@
-Django==5.2.8
+Django==5.2.9
 django-avatar==8.0.1
 django-bootstrap5==25.3
 django-bootstrap-modal-forms==3.0.5
